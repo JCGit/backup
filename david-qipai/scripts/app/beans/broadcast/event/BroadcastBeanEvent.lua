@@ -1,0 +1,14 @@
+local BroadcastBeanEvent = {}
+BroadcastBeanEvent.EVT_CLI_LOGIN = "BroadcastBeanEvent.EVT_CLI_LOGIN"
+BroadcastBeanEvent.EVT_CLI_LOGOUT = "BroadcastBeanEvent.EVT_CLI_LOGOUT"
+BroadcastBeanEvent.EVT_CLI_TRANSMIT_MULTICAST = "BroadcastBeanEvent.EVT_CLI_TRANSMIT_MULTICAST"
+BroadcastBeanEvent.EVT_CLI_TRANSMIT_BROADCAST = "BroadcastBeanEvent.EVT_CLI_TRANSMIT_BROADCAST"
+BroadcastBeanEvent.EVT_SVR_LOGIN_SUCCESS = "BroadcastBeanEvent.EVT_SVR_LOGIN_SUCCESS"
+BroadcastBeanEvent.EVT_SVR_LOGOUT_SUCCESS = "BroadcastBeanEvent.EVT_SVR_LOGOUT_SUCCESS"
+BroadcastBeanEvent.EVT_SVR_LOGIN_FAIL = "BroadcastBeanEvent.EVT_SVR_LOGIN_FAIL"
+BroadcastBeanEvent.EVT_SVR_TRANSMIT_MULTICAST = "BroadcastBeanEvent.EVT_SVR_TRANSMIT_MULTICAST"
+BroadcastBeanEvent.EVT_SVR_TRANSMIT_BROADCAST = "BroadcastBeanEvent.EVT_SVR_TRANSMIT_BROADCAST"
+BroadcastBeanEvent.EVT_SVR_SYSTEM_MULTICAST = "BroadcastBeanEvent.EVT_SVR_SYSTEM_MULTICAST"
+BroadcastBeanEvent.EVT_SVR_USERINFO_SINGLECAST = "BroadcastBeanEvent.EVT_SVR_USERINFO_SINGLECAST"
+BroadcastBeanEvent.EVT_SVR_SYSTEM_BROADCAST = "BroadcastBeanEvent.EVT_SVR_SYSTEM_BROADCAST"
+return BroadcastBeanEvent

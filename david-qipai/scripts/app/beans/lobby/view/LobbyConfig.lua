@@ -1,0 +1,19 @@
+local LobbyConfig = class("LobbyConfig")
+LobbyConfig.ANIMATION_TIME = 0.5
+LobbyConfig.HIDE_LOGIN_ANIMATION_TIME = 0.3
+LobbyConfig.SHOW_LOGIN_ANIMATION_TIME = 0.5
+LobbyConfig.SHOWUP_TABLELIST_ANIMATION_TIME = 0.5
+LobbyConfig.HIDE_TABLELIST_ANIMATION_TIME = 0.3
+LobbyConfig.HIDE_LOBBY_ANIMATION_TIME = 0.2
+LobbyConfig.TABLE_LEAK_HEIGHT = 132
+LobbyConfig.MAIN_NODE_Z_ORDER = 1
+LobbyConfig.TABLE_NODE_Z_ORDER = 2
+LobbyConfig.BOTTOM_NODE_Z_ORDER = 3
+LobbyConfig.FREE_CHIP_COVER_Z_ORDER = 4
+LobbyConfig.FREE_CHIP_NODE_Z_ORDER = 5
+LobbyConfig.LOGO_POS_X = display.cx - 380 * g.scaleWidth * 0.5 - 84
+LobbyConfig.LOGO_LOADING_POS_Y = 0
+LobbyConfig.LOGO_NORMAL_POS_Y = display.cy * 0.5
+LobbyConfig.PROGRESS_POS_X = LobbyConfig.LOGO_POS_X
+LobbyConfig.PROGRESS_POS_Y = -display.cy + 133
+return LobbyConfig

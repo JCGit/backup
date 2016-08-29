@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<userDefaultRoot>
+    <storageKeys.loginType>device</storageKeys.loginType>
+    <storageKeys.volume>40</storageKeys.volume>
+    <storageKeys.volumeEnable>true</storageKeys.volumeEnable>
+    <storageKeys.bgm>40</storageKeys.bgm>
+    <storageKeys.bgmEnable>true</storageKeys.bgmEnable>
+    <storageKeys.shock>true</storageKeys.shock>
+    <storageKeys.autoSit>true</storageKeys.autoSit>
+    <storageKeys.autoBuy>true</storageKeys.autoBuy>
+    <storageKeys.proxyHeartbeatSeq>18</storageKeys.proxyHeartbeatSeq>
+</userDefaultRoot>
