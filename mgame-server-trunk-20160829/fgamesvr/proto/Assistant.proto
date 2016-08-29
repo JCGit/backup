@@ -1,0 +1,75 @@
+package fgame;
+option optimize_for = LITE_RUNTIME;
+
+
+message AssistantInfo {
+    required uint32 AssistantId   = 1; // 精灵类型ID，一种类型只能拥有一个
+    required uint32 Level         = 2; // 等级
+    required uint32 Quality       = 3; // 品质
+    optional bool   IsInBattle    = 4; // 是否出战  此字段已废弃
+    required uint32 ExpTime       = 5; // 过期时间 特殊值0为永久类型
+    repeated uint32 ActiveSkills  = 6; // 主动技能
+    repeated uint32 PassiveSkills = 7; // 被动技能
+    required uint32 PieceNum      = 8; // 此将军对应的碎片的总数
+    optional uint32 SlotIndex = 9;  //精灵所在槽位
+}
+
+// 同步精灵数据
+message CSAsSyncInfoReq { }
+
+// 同步精灵数据 如果精灵数据有变化，也会用这个协议来通知
+message CSAsSyncInfoResp {
+    repeated AssistantInfo  Assistant = 1; // 精灵列表
+}
+
+// 新增精灵
+message CSAsNewAddReq { }
+
+message CSAsNewAddResp {
+    repeated AssistantInfo NewAddAssistant = 1; // 新增的精灵
+}
+
+// 装备/卸下精灵; 进阶 升级
+message CSAsOperateReq {
+    required uint32 AssistantId = 1; // 精灵ID
+    optional uint32 SlotIndex = 2;
+}
+
+message CSAsOperateResp {
+    required uint32 AssistantId = 1; // 精灵ID
+    required bool Res           = 2; // 操作结果
+    optional uint32 SlotIndex = 3; //槽位
+}
+
+// 将军升级
+message CSAsUpGradReq {
+    required uint32 AssistantId = 1; // 将军id
+    required uint32 Level       = 2; // 将军当前等级
+}
+
+message CSAsUpGradResp {
+    required uint32 AssistantId     = 1; // 将军Id
+    required uint32 PieceNum        = 2; // 此将军碎片数
+    required uint32 Level           = 3; // 升级后的级别
+    repeated uint32 ActiveSkills    = 4; // 主动技能
+    repeated uint32 PassiveSkills   = 5; // 被动技能
+}
+
+
+// 使用精灵体验卡 此协议没用到
+message CSAsUseCardReq {
+    required uint32 AssistantId = 1; // 精灵ID
+    required uint32 CardID      = 2; // 体验卡ID
+}
+
+message CSAsUseCardResp {
+    required uint32 AssistantId = 1; // 精灵ID
+    required uint32 CardID      = 2; // 体验卡ID
+    required bool Res           = 3; // 结果
+}
+
+
+
+
+
+

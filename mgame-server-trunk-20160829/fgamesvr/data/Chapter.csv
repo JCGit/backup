@@ -1,0 +1,7 @@
+id,name,mapFile,missionNum,needMissionID,needMissionName,needScore,needCost,maxScore,rewardID
+id 不重复就行,章节名,地图文件,关卡数,解锁关卡ID,解锁关卡名（为了不遍历checkpoint表）,解锁星数,解锁钻石数,最大星数,奖励宝箱ID
+1,第一章,BthChapterLayer1.csb,30,0,0,0,0,90,1+2+3+4+5+6+7
+2,第二章,BthChapterLayer2.csb,35,1200,20,45,150,105,8+9+10+11+12+13+14+15+16
+3,第三章,BthChapterLayer3.csb,35,2180,18,110,300,105,17+18+19+20+21+22+23+24+25
+4,第四章,BthChapterLayer4.csb,35,3200,20,210,300,105,26+27+28+29+30+31+32+33+34
+99,新手训练营,BthChapterLayer1.csb,6,0,0,0,0,0,0

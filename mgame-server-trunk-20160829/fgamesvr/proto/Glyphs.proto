@@ -1,0 +1,88 @@
+package fgame;
+option optimize_for = LITE_RUNTIME;
+
+// 请求雕文数据 CS_CMD_GLYPHS_REQUEST_INFO = 8700;
+message CSGlyphsRequestInfoReq {
+}
+
+message GlyphInfo {
+    enum Status {
+        NotOpen   = 1; // 未开放
+        CanActive = 2; // 可激活
+        Active    = 3; // 已激活
+        LevelCan  = 4; // 等级未达到可激活等级
+        VipCan    = 5; // VIP未达到可激活等级
+        VipNot    = 6; // VIP已过期，VIP锁定
+
+    }
+    required int32 glyphID = 1; // 符文ID 101， 102 ...
+    required int32 level   = 2;
+    required Status status = 3;
+}
+
+message CSGlyphsRequestInfoResp {
+    repeated GlyphInfo glyphData = 1;
+}
+
+//请求材料数据 CS_CMD_GLYPHS_REQUEST_BASIC_INFO = 8701;
+message CSGlyphsRequestBasicInfoReq {
+}
+
+message StuffInfo {
+    required int32 stuffID = 1; // 材料的编号，目前有13种
+    required int32 count   = 2; // 材料的数量
+}
+
+// 材料数据
+message CSGlyphsRequestBasicInfoResp {
+    repeated StuffInfo stuffInfo = 1;
+}
+
+// 激活雕文 CS_CMD_GLYPHS_ACTIVE = 8702;
+message CSGlyphsActiveReq {
+    required int32 glyphID = 1; // 请求激活的雕文ID
+
+}
+message CSGlyphsActiveResp {
+    enum Status {
+        OK                   = 1; // 成功激活
+        FAILED_ACTIVE        = 2; // 已经激活了
+        FAILED_CANNOT_ACTIVE = 3; // 雕文是不可激活状态
+        FAILED_NO_STUFF      = 4; // 激活雕文的材料不足
+        FAILED_INVALID_ID    = 5; // 无效的符号ID编号
+        FAILED_VIP           = 6; // VIP等级不足
+        FAILED_NOT_OPEN      = 7; // 还未开放，正常客户端不应该发此请求的
+        FAILED_ERROR         = 8; // 其他错误
+    };
+    required int32 glyphID = 1; // 请求激活的雕文ID
+    required Status status = 2;
+}
+
+// 升级雕文 CS_CMD_GLYPHS_UPGRADE = 8703;
+message CSGlyphsUpgradeReq {
+    required int32 glyphID = 1; // 请求升级的雕文ID
+}
+message CSGlyphsUpgradeResp {
+    required int32 glyphID = 1; // 请求升级的雕文ID
+    required int32 level   = 2; // 雕文等级
+    required bool is_ok    = 3; // 是否升级成功
+}
+
+message CSNotifyGlyphsUpdateReq {
+}
+
+// 符文状态改变后, 服务器推送通知 CS_CMD_GLYPHS_UPDATE = 8706;
+message CSNotifyGlyphsUpdateResp {
+    required bool   HaveUpdate = 1; // 为true时表示有红点提示
+    repeated uint32 TypeList   = 2;
+}
+
+
+//新手符文引导 修改玩家材料
+message CSGlyphGuideReq {
+}
+
+message CSGlyphGuideResp {
+    required uint32 Ret = 1;
+    required uint32 GiftID = 2; // 返回999
+}

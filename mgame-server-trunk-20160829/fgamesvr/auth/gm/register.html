@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <script src="javascript/jquery-2.2.2.min.js"></script>
+    <script src="javascript/jquery-md5.js"></script>
+    <!-- // <script src="script/cryptico.js"></script> -->
+
+    <script type="text/javascript">
+        function Register(){
+            var name = $('#name').val();
+            var pass = $.md5($('#pass').val());
+
+            if (name.length == 0 ){
+                alert('用户名不能为空!');
+                return
+            }
+
+            if (pass.length == 0 ){
+                alert('你忘记输密码啦！！');
+                return
+            }
+
+            $.ajax({
+                type:"GET",
+                url:"/register.php",
+                data:{user_name:name,user_pass:pass},
+                dataType:'json',
+                success: function(data) {
+                    if (data.ret == 0){
+                        window.location.href = '/entry.php';
+                    }else {
+                        alert('登录失败: '+ data.msg);
+                    }
+                },
+                error: function(data) {
+                    alert('http failed' + data);
+                }
+            }
+            );
+        }
+    </script>
+
+    <style type="text/css">
+        body {
+            margin-left: 226px;
+            margin-top: 80px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="register">
+        <label>用户名:</label><input type="text" id="name" name="name"></input></br>
+        <label>密码:</label><input type="password" id="pass" name="pass"></input></br>
+        <button type="button" onclick="Register();">GO!</button>
+    </div>
+</body>
+
+<html>

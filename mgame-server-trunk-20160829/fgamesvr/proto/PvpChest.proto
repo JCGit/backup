@@ -1,0 +1,79 @@
+#include "version.h"
+
+package fgame;
+option optimize_for = LITE_RUNTIME;
+
+
+message CSPVPLuckChestInfoReq{
+}
+
+message CSPVPLuckChestOpenReq{
+}
+
+
+message PvpLuckChestInfo
+{
+    required uint32 progress = 1;     // 进度（0-3正常进度）
+    required uint32 countdown = 2;    // 倒计时（时间戳）
+}
+
+message CSPVPLuckChestInfoResp{
+    required PvpLuckChestInfo luckInfo = 1;
+}
+
+message PVPChestItem{
+    required uint32 Id      = 1;
+    required uint32 Type    = 2;
+    required uint32 Count   = 3;
+}
+
+message CSPVPLuckChestOpenResp{
+    required PvpLuckChestInfo luckInfo = 1;
+    repeated PVPChestItem ItemList = 2;  //  宝箱开出的物品
+}
+
+message NormalChestInfo {
+    required uint32 id = 1;   // 宝箱类型
+    optional  string name = 2; //
+    optional  uint32 cd = 3;
+    optional  uint32 diamond = 4; // （0：已开启，否则是开启所需钻石）
+}
+
+message PvpNormalChestInfo{
+    repeated  NormalChestInfo chestList = 1;
+    required  uint32 CdTime  = 2;
+    required  uint32 lock    = 3; //(0: 正常状态， 1：lock)
+    required  uint32 unLockTime = 4;
+    optional   uint32 maxTime = 5; // 冷却最大时间（小时）
+}
+
+message CSPVPNormalChestInfoReq{
+
+}
+
+message CSPVPNormalChestInfoResp{
+    required  PvpNormalChestInfo info  = 1;
+}
+
+message CSPVPNormalChestOpenReq{
+    required  uint32 idx = 1;
+}
+
+message CSPVPNormalChestOpenResp{
+    required PvpNormalChestInfo info = 1;
+    repeated PVPChestItem ItemList = 2;
+}
+
+message CSPVPNormalChestSlotBuyReq{
+    required uint32 idx = 1;
+}
+
+message CSPVPNormalChestSlotBuyResp{
+    required PvpNormalChestInfo info = 1;
+}
+message CSPVPNormalChestClearTimeReq{
+}
+
+message CSPVPNormalChestClearTimeResp{
+    required PvpNormalChestInfo info = 1;
+}

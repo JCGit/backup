@@ -1,0 +1,11 @@
+id,type,icon,des
+id,"模块类型（1,研究院， 2：天赋，3：PVE, 4:排行榜）",模块图标,推送文字
+1,1,ui/general/shenjiangzhaohuan.png,主人，抽了卡可以变得更强力哦
+2,2,ui/general/main_glyph.png,主人，先去升级下天赋？
+3,3,ui/general/meiweidamaoxian.png,主人，试试美味大冒险，磨刀不误砍柴工
+4,4,ui/general/paihangbang.png,没有排行榜
+5,3,ui/general/meiweidamaoxian.png,主人，美味冒险还有好多通关奖励呢
+6,1,ui/general/shenjiangzhaohuan.png,主人，还有免费的抽卡次数没有用呢
+7,3,ui/general/meiweidamaoxian.png,征战辛苦，要不要去美食大冒险锻炼一下？
+8,2,ui/general/main_glyph.png,主人，敌人的天赋太强了，需要看看吗？
+9,3,ui/general/meiweidamaoxian.png,主人，要不要去美味大冒险换换口味？

@@ -1,0 +1,76 @@
+﻿1 王者之路
+
+config 
+	bonusData		{}		奖励数据
+		index		int		连胜场次[1+ 当超过最大值 取最大值]
+		value		int		钻石数量/荣誉点数
+	
+selfData
+	takeState		int		领取状态 1 未领取 不能领奖 2 未领取 能领奖 3 已领取 不能再领奖
+	conWinCount		int		连胜场次
+	
+凌晨处理selfData
+	takeState		1 
+	conWinCount		0
+	
+连胜20场 发勋章 这个不应该放在活动类 是一个具体的功能
+
+打完一场 
+胜利 conWinCount + 1
+失败 takeState 1
+
+领取协议
+前提 takeState状态为2 连胜记录大于1 未领取状态
+过程 takeState 3
+
+
+
+2 勇者之心
+
+config
+	bonusData
+		index		int		天数
+		winCount	int		当天胜利场次
+		giftId		int		宝箱id
+
+selfData
+	winCount		int		当天胜利场次
+	takeState		int		1 未领取 不能领奖 2 未领取 能领奖 3 已领取 不能再领奖
+
+凌晨处理selfData
+	takeState		1 
+	winCount		0
+	
+打完一场 
+胜利 winCount + 1
+当达到条件 takeState 2
+
+领取协议
+前提 takeState状态为2 连胜记录大于1 未领取状态
+过程 takeState 3
+
+
+3 战斗狂人
+
+config 
+	bonusData
+		index		int		天数
+		count		int		pvp场次
+		giftId		int		宝箱id
+		
+selfData
+	count			int		天数
+	takeState		int		1 未领取 不能领奖 2 未领取 能领奖 3 已领取 不能再领奖
+
+凌晨处理selfData
+	takeState		1 
+	count			0
+	
+打完一场 
+count + 1	
+当达到条件 takeState 2
+
+领取协议
+前提 takeState状态为2 连胜记录大于1 未领取状态
+过程 takeState 3
+

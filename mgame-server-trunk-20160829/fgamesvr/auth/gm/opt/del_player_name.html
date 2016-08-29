@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>转换UIN</title>
+   <meta charset="UTF-8">
+<script type="text/javascript" charset="UTF-8" src="javascript/jquery-2.2.2.min.js"></script>
+<script type="text/javascript">
+$("document").ready(function() {
+    $("#btn").click(function() {
+        $.ajax({
+            url: "opt/del_player_name.php",
+            type: "GET",
+            dataType: "json",
+            data: $('form').serialize(),
+            success: function(data, textStatus, jqXHR) {
+                var ret = data.msg;
+                $("#result").html('');
+                $("#result").append(ret);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                var ret = "Something is wrong with server. textStatus: ".concat(textStatus);
+                $("#result").html('');
+                $("#result").append(ret);
+            }
+        });
+    });
+});
+</script>
+</head>
+<body>
+    <div align="right">
+      <form>
+        <h1 color='red'>删除用户名</h1>
+        <div>
+        服务器ip: <input type="text" id="server_ip" name="server_ip" value="10.10.1.134"/>
+        </div>
+        <div>
+        服务器端口: <input id="server_port" name="server_port" value="7602" onkeyup="if(/\D/.test(this.value)){alert('只能输入数字');this.value='';}" type="text"/>
+        </div>
+        <div>
+        玩家UIN: <input type="text" id="uin" name="uin" onkeyup="if(/\D/.test(this.value)){alert('只能输入数字');this.value='';}"/>
+        </div>
+        <div>
+        平台:
+        <?php
+        include "platform.php";
+        ?>  
+        </div>
+      </form>
+      <input type="submit" id="btn" value="删除"/>
+    </div>
+    <div id="result"></div>
+</body>
+</html>

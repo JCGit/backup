@@ -1,0 +1,5 @@
+csv_parser.lua         : 做策划配置文件生成lua table
+tmx_parser.lua         : 地图信息生成lua table
+find_recharge.sh       : 查找指定uin充值记录是否异常的脚本uin可以配置在uin.txt文件里
+simple_ssh.sh          : 简单工具访问所有腾讯外网服务器
+update_config.sh       : 简单的方式用于更新策划的配置, 排除其中服务器未使用到的配置文件

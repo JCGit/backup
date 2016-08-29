@@ -1,0 +1,539 @@
+#include "version.h"
+
+package fgame;
+option optimize_for = LITE_RUNTIME;
+
+import "Player.proto";
+
+//请求所有开启的活动数据
+message CSGetOpenActivityReq{
+
+}
+
+message CSOpenActivityInfo {
+    required uint32 Type = 1; //充值或者其他
+}
+
+//获取所有开启的活动
+message CSGetOpenActivityResp{
+    repeated CSOpenActivityInfo OpenActivityInfo = 1;
+}
+
+//获取所有活动数据
+message CSGetActivityDataReq{
+
+}
+
+message CSActivityInfo {
+    required uint32 Id = 1;
+    required uint32 Stage = 2;
+    required uint32 Type = 3; //充值或者其他
+    optional uint32 Status = 4; // 0 已经领取了的 1 达到条件没有领取  2 没有达到条件
+    optional uint32 Gift = 5; //礼包ID
+    optional string StartTime = 6; //开始时间
+    optional string EndTime = 7; //结束时间
+    optional uint32 Recharge_num = 8;
+}
+
+//活动数据
+message CSGetActivityDataResp{
+    required uint32 DayCount =1;
+    required uint32 RechargeCount =2;
+    repeated CSActivityInfo ActivityInfo = 3;
+}
+
+message CSReceiveActivityRewardReq{
+    required uint32 Id = 1;
+    required uint32 Stage = 2;
+    required uint32 Type = 3;
+}
+
+message CSReceiveActivityRewardResp{
+    required uint32 Ret = 1;
+    required uint32 Type = 2;
+    required uint32 Id = 3;
+}
+
+//获取体力精力大放送的活动数据
+message CSGetPowerEnergyActivityDataReq{
+}
+
+//推送体力精力活动开启信息
+message CSGetPowerEnergyActivityResp{
+    required uint32 Id = 1;
+    required uint32 IsOpen = 2; //活动是否开启 0 默认未开启 1 已开启 2 活动没开启但需显示图标
+    required uint32 Status = 3; // 0 活动已领取，1 活动未领取
+    required uint32 StartTime = 4; // 距离开始时间单位秒 0 代表已经开启
+    required uint32 EndTime = 5;//结束时间 0 代表已经结束
+}
+
+//请求领取体力或者精力
+message CSReceivePowerEnergyReq{
+    required uint32 Id = 1;
+    required uint32 Type = 2; // 1体力 2 精力
+}
+
+message CSReceivePowerEnergyResp{
+    required uint32 Ret = 1;
+    required uint32 Type = 2; // 1体力 2 精力
+}
+
+//活动相关
+//活动列表
+message CSSubActivity{
+   required uint32 Act_Id    = 1; //活动ID
+   required uint32 Sub_Id    = 2; //子ID
+   optional uint32 GiftId    = 3;
+   optional uint32 Request   = 4; // 需求值
+   optional uint32 Value     = 5; // 当前值
+   optional bool   Completed = 6; // 是否完成
+   optional bool   Submit    = 7; // 是否提交
+}
+
+message CSActivityData{
+   required uint32 Act_type = 1;  //活动类型
+   required uint32 Cur_SubId = 2; //当前活动子ID
+   required uint32 DaysRemain = 3; //活动剩余天数
+   repeated CSSubActivity SubList = 4; //活动子项列表
+}
+
+//请求列表
+message CSActivityListReq{
+}
+
+message CSActivityListResp{
+   repeated CSActivityData ActivityList = 1;
+}
+
+//提交活动
+message CSActivitySubmitReq{
+   required uint32 Act_Id = 1; //活动ID
+   required uint32 Sub_Id = 2; //子ID
+}
+
+message CSActivitySubmitResp{
+   required uint32 Act_Id = 1; //活动ID
+   required uint32 Sub_Id = 2; //子ID
+}
+
+message CSActivityUpdateResp{
+   required CSSubActivity Activity = 1;
+}
+
+message CSNewYearGetInfoReq{
+}
+
+message CSNewYearGetInfoResp{
+    optional uint32 startTime = 1;
+    optional uint32 endTime = 2;
+    optional uint32 conditionId = 3;
+    optional uint32 completeCount = 4;
+    optional uint32 curCount = 5;
+    optional bool nextPacketTag = 6;
+    optional uint32 awardId = 7;
+}
+
+message CSNewYearRewardReq{
+}
+
+message CSNewYearRewardResp{
+    optional uint32 ret = 1; //0领取成功， 1:xx错误
+    optional CSNewYearGetInfoResp nextTask = 2;
+}
+
+message CSNewYearCmpReq{
+}
+
+message CSNewYearCmpResp{
+}
+
+
+message CSActivityCrazyUsageReq
+{
+}
+
+message CSActivityCrazyUsageResp
+{
+    required uint32 GiftId      = 1;  // 礼包id
+}
+
+
+message CSOpenChestReq{
+    required int32 ItemId   = 1; //物品ID
+    optional int32 Count    =2; //物品数量
+}
+
+message CSRedPacketsGetInfoReq{
+}
+
+message CSRedPacketsGetInfoResp{
+    optional uint32 status      = 1;
+    optional uint32 value       = 2;
+    optional uint32 time        = 3;
+
+    //status == 0：不可抢 | value == 0 没红包了 | value!=0砖石数量,| time:下一次抢时间
+    //status==1：可抢，value:红包剩余数量
+    //status ==2:不可抢，第一个红包即将开始
+}
+
+message CSRedPacketsGrebReq{
+}
+
+message CSRedPacketsGrebResp{
+    optional uint32 ret         = 1;
+    optional uint32 value       = 2;
+
+    //ret==0:失败， value：失败原因  value==1:红包抢光了， value==2:活动结束了
+    //ret==1:成功， value:钻石数量
+}
+
+message CSRedPacketsOpenedReq{
+}
+
+message CSRedPacketsOpenedResp{
+	optional uint32 startTime		= 1; //开启时间 
+	optional uint32 endTime			= 2; //结束时间
+}
+
+message CSChristmasDecorateReq {
+    required int32 Type     = 1; //装扮类型
+    optional int32 Count    = 2; //数量
+}
+
+message CSChristmasDecorateResp {
+    required int32 Score    = 1;
+    repeated PropertyUpdateData UpdateData = 2;
+}
+
+message CSChristmasTakeBonusReq {
+    required int32 Level    = 1;
+}
+
+message CSChristmasTakeBonusResp {
+    repeated PropertyUpdateData UpdateData = 1;
+}
+
+message CSChristmasGetDataReq{
+}
+
+message ChristmasTakeRecord{
+    required int32  Level    = 1; //圣诞活动阶段
+    required bool   IsTake   = 2; //是否已领取
+}
+
+message CSChristmasGetDataResp{
+    required int32 StartTime    = 1; //活动开始时间
+    required int32 EndTime      = 2; //活动结束时间
+    optional int32 GlobalScore  = 3; //全服圣诞积分
+    optional int32 SelfScore    = 4; //个人圣诞积分
+    repeated ChristmasTakeRecord TakeRecord = 5; //领取记录
+	optional int32 DropEndTime  = 6; //掉落结束时间
+}
+
+message CSChristmasGetRankReq{
+}
+
+message ChristmasRankItem{
+    required int32 Order    = 1;
+    required int32 Id       = 2;
+    required string Name     = 3;
+    required int32 Score    = 4;
+    optional int32 VipLevel = 5;
+}
+
+message CSChristmasGetRankResp{
+    repeated ChristmasRankItem RankItems = 1;
+}
+
+
+
+//情人节
+message CSValentineDataReq{
+}
+
+
+message CSValentineDataResp{
+    required int32 StartTime = 1; //活动开始时间
+    required int32 EndTime = 2; //活动结束时间
+    optional int32 RedRose = 3; //红玫瑰数量
+    optional int32 PinkRose = 4; //粉玫瑰数量
+    optional int32 BlueRose = 5; //蓝玫瑰数量
+}
+
+message CSValentineExchangeReq{
+    required int32 ItemId = 1; //礼盒id
+}
+
+message CSValentineExchangeResp{
+}
+
+
+// 每日任务
+
+// 本次登录是否显示每日任务
+message CSDailyTaskStatusReq {
+}
+
+message CSDailyTaskStatusResp {
+    required bool ShowDailyTask = 1; // 是否显示每日任务入口按钮
+}
+
+// 获取当前的每日任务列表
+message CSRequestDailyTaskReq {
+}
+
+message DailyTaskInfo {
+    required uint32 TaskType      = 1; // 任务类型
+    required uint32 GiftID        = 2; // 奖励编号 gift表编号
+    required uint32 Progress      = 3; // 当前完成进度
+    required uint32 TotalProgress = 4; // 总进度
+    required bool   IsOpen        = 5; // 当前是否开启，专门针对无道具场任务设计
+}
+
+message CSRequestDailyTaskResp {
+    repeated DailyTaskInfo TaskInfoList = 1; // 任务列表,列表中的任务类型不会相同
+    required uint32        TaskProgress = 2; // 宝箱进度 完成任务数量:0,1,2,3
+    required bool          CanChange    = 3; // 当前是否可以切换一次任务
+}
+
+
+message CSUpdateTaskStatusReq {
+}
+
+// 更新每日任务状态，针对限时类任务的无道具场 (或其他限制条件)
+message CSUpdateTaskStatusResp {
+    required uint32 TaskType      = 1; // 任务类型
+    required bool   IsOpen        = 2; // 当前是否开启，专门针对无道具场任务设计
+}
+
+// 切换任务
+message CSChangeDailyTaskReq {
+    required uint32 TaskType = 1; // 请求切换的任务类型
+}
+
+message CSChangeDailyTaskResp {
+    required bool   Result         = 1; // 是否成功
+    optional DailyTaskInfo NewTask = 2; // 新切换的任务
+}
+
+// 打开每日任务奖励
+message CSOpenDailyTaskAwardReq {
+}
+
+message CSOpenDailyTaskAwardResp {
+    required bool   Ok          = 1; // 成功领奖
+    optional uint32 GiftID      = 2; // 奖励编号
+    optional bool   HaveNewTask = 3; // 是否还有新一天的每日任务
+}
+
+// 上报某些类型的任务完成进度
+message CSUpdateDailyTaskProgressReq {
+    repeated uint32 TaskType = 1;
+    repeated uint32 Progress = 2;
+}
+
+// 回应客户端的上报结果
+// 或者 服务器主动通知客户端 某些任务的完成进度更新
+message CSUpdateDailyTaskProgressResp {
+    required bool   Ok       = 1; // 上报型任务的处理结果
+    repeated uint32 TaskType = 2;
+    repeated uint32 Progress = 3;
+}
+
+message CSRankWeekRewardInfoReq{
+}
+
+message CSRankWeekRewardInfoResp{
+    optional bool Status        = 1;
+    optional uint32 PvpCount    = 2;
+    optional uint32 GroupId     = 3;
+    optional uint32 Rank        = 4;
+}
+
+message CSRankWeekRewardRewardReq{
+}
+
+message CSRankWeekRewardRewardResp{
+    optional bool Success       = 1;
+    optional uint32 Error       = 2;
+}
+
+message CSNewDailyTaskResp {
+    required bool Ok = 1;
+}
+
+//------------------- 运营活动协议 -------------------------
+
+//服务器下发增加运营活动
+message CSOpActAddResp{
+    required string ActivityConfig = 1; //活动配置数据【json格式的】
+    /*必须拥有以下字段:
+    id              活动ID
+    name            活动名称
+    desc            活动规则描述
+    type            活动类型
+                    运营活动示例      1000
+                    其他类型...
+    starttime       开始时间【精确到秒】
+    endtime         结束时间
+    state           活动状态 【1 添加未启用 2 添加已启用 3 可见 4 运行中 5 过期】
+    updateTime      活动最近一次操作时间
+    icon            图标
+    -- 额外数据根据活动类型不同,详细数据见下面注释
+    */
+}
+
+/*  --- 运营活动额外数据 -----
+运营活动DEMO：
+    globalTotalCount     全服总次数
+    singleTotalCount     个人领取总次数
+    takeExp              个人领取获得经验奖励
+*/
+
+message CSOpActStateChangedResp{
+    required uint32 ActivityId  = 1; //活动ID
+    required uint32 State       = 2; //活动状态 【客户端处理状态 3 可见 4 运行中 5 过期】
+    //当活动状态为可见的时候 活动能在客户端看得到 但是不能参与
+    //当活动在运行中[到达活动配置的startTime] 可以参与
+    //当活动过期 需要关闭客户端的入口
+}
+
+message CSActSelfDataChangedResp{
+    required string SelfData    = 1; //个人活动数据【json数据】
+/*
+    --base
+    uin
+    ActivityId
+    updateTime
+    --extra [type]
+    demo:
+            takeCount 个人已领取次数
+    --other
+*/
+}
+
+message CSActGlobalDataChangedResp{
+    required string GlobalData  = 1; //全局活动数据【json数据】
+    /*
+    -- base
+    activityId
+    updateTime
+    -- extra[type]
+    demo
+        takeCount  全局已领取次数
+    */
+}
+
+message CSOpActConfigListReq{
+}
+
+message CSOpActConfigListResp{
+    repeated string ActivityConfig = 1; //活动配置数据【json数据】
+}
+
+message CSOpActSelfDataListReq{
+}
+
+message CSOpActSelfDataListResp{
+    repeated string SelfData = 1; //个人活动数据【json数据】
+}
+
+message CSOpActGlobalDataListReq{
+}
+
+message CSOpActGlobalDataListResp{
+    repeated string GlobalData = 1; //全局活动数据【json数据】
+}
+
+message CSOpActDemoTakeReq{
+    required uint32 ActivityId = 1; //活动ID
+}
+
+message CSOpActDemoTakeResp{
+}
+
+message CSOpActExchangeReq{
+    required uint32 ActivityId  = 1; //活动ID
+    required uint32 ExchangeId  = 2; //兑换ID
+}
+
+message CSOpActExchangeResp{
+    required uint32 ActivityId  = 1; //活动ID
+    required uint32 ExchangeId  = 2; //兑换ID
+}
+
+
+//巅峰排行
+message CSTopRankReq {
+    required uint32 ActivityType = 1; // 1008 : 美味排行  1009 : pvp胜利排名 1010 : pvp连胜排名    
+}
+
+message TopRankData {
+    optional uint32 Rank   = 1; //名次
+    optional uint32 Uin    = 2; //玩家Id    
+    optional string Name   = 3; //玩家昵称
+    optional string Avator = 4; //玩家头像
+    optional uint32 Value  = 5; //排名的值 依据category不同
+    optional uint32   Up   = 6; //排名是否上升
+}
+
+message CSTopRankResp {
+    required uint32 ActivityType  = 1;  // 1008 : 美味排行  1009 : pvp胜利排名 1010 : pvp连胜排名    
+    repeated TopRankData Data = 2; // 排名
+}
+
+message CSTopRankTimeReq {
+    required uint32 ActivityType  = 1;  // 1008 : 美味排行  1009 : pvp胜利排名 1010 : pvp连胜排名    
+}
+
+message CSTopRankTimeResp {
+    required uint32 ActivityType = 1; // 1008 : 美味排行  1009 : pvp胜利排名 1010 : pvp连胜排名    
+    required uint32 Secs         = 2; //距下次刷新时间
+}
+
+// 限时兑换
+message CSLimitExchangeReq {
+    required uint32 ItemId = 1; // 兑换的id
+}
+
+message CSLimitExchangeResp{
+    required uint32 ItemId = 1; // 兑换的id
+}
+
+// 累积召唤
+message CSSumCallReq {
+    required uint32 ItemId = 1; // 领取的id
+}
+
+message CSSumCallResp{
+    required uint32 ItemId = 1; // 领取的id
+}
+
+
+//勇者之心，战斗狂人领取奖励
+message CSBattleGiftReq {
+    required uint32 ActivityType = 1; //活动类型 (1013 勇者之心 1014 王者之路)
+}
+
+message CSBattleGiftResp{
+    required uint32 ActivityType = 1; //
+    required uint32 Day = 2; //领取的是哪天的奖励
+}
+
+// 王者之路荣誉领取
+message CSBattleScoreReq {
+
+}
+
+message CSBattleScoreResp {
+    required uint32 Score = 1; //领取奖励的荣誉值
+}
+
+
+message CSSumRechargeReq {
+    required uint32 ItemId = 1; // 领取的id 
+}
+
+message CSSumRechargeResp {
+    required uint32 ItemId = 1; // 领取的id
+}

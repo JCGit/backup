@@ -1,0 +1,71 @@
+邮件系统通知：
+a, linux下邮件相关软件的安装 这里采用了msmtp + mutt 来发送邮件
+	1, 安装配置msmtp
+		$ yum install gcc gcc-c++ gnutls gnutls-devel gnutls-utils openssl openssl-devel libidn libidn-devel -y
+		$ wget http://sourceforge.net/projects/msmtp/files/msmtp/1.4.32/msmtp-1.4.32.tar.bz2
+		$ tar -jxvf msmtp-1.4.32.tar.bz2
+		$ cd msmtp-1.4.32
+		$ ./configure --prefix=/usr/local/msmtp
+		$ cd msmtp-1.4.32
+		$ make && make install
+	2, 安装完后，修改配置文件
+		$ mkdir /usr/local/msmtp/etc
+		$ cat >>/usr/local/msmtp/etc/msmtprc<<EOF
+		直接复制以下内容粘贴在>号的位置即可
+		defaults
+		tls on
+		logfile /usr/local/msmtp/msmtp.log
+
+		account acc1
+		host smtp.163.com
+		port 25
+		from XXXX@163.com
+		auth login
+		tls off
+		user XXXX@163.com
+		password XXXXXXXXX(收不到邮件,不知是不是当作垃圾邮件处理掉了)
+
+		account acc2
+		host smtp.qq.com
+		port 465
+		from XXXXX@qq.com
+		auth login
+		tls_starttls off
+		tls on
+		tls_certcheck off
+		user XXXXX@qq.com
+		password xxxx(疑似独立安全密码,不是qq密码,不确定)
+		
+		account default : acc2
+	注：两个账号，acc1是163邮箱，因为收不到邮件，暂时抛弃。acc2是qq邮箱，但需要开启IMAP/SMTP服务(在QQ邮箱设置-账号里设置),没开启发送邮件报错。
+		至于password，疑似独立安全密码,不是qq密码,不确定，该其他也会出现无法发送邮件的情况
+		
+	3，安装 mutt 
+		使用yum的方式来安装mutt
+		$ yum install mutt -y
+		配置mutt
+		$ cat >>/etc/Muttrc<<EOF
+		直接复制以下内容粘贴在>号的位置即可
+		set sendmail="/usr/local/msmtp/bin/msmtp"
+		set use_from=no
+		set realname="XXXXXX@qq.com" 
+		set editor="vim"
+		EOF
+b, 功能测试
+	$ echo "这里是正文" |mutt -s "这里是标题" my@163.com
+	
+详细博客：
+http://www.tuicool.com/articles/YRnQVfq	
+	
+	
+
+
+
+
+
+
+
+
+
+
+

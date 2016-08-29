@@ -1,0 +1,10 @@
+id,name,icon,path,forever,cost,soliderFla,itemid,free
+id,名称,头像资源路径,大图资源路径,时装类型,用于购买时间所消费的钻石(1#20|2#50)天数#钻石 0用于配置永久,士兵动画,时装引导道具ID,体验时间(天)
+1,庆丰包,ui/Icon/Icon_qingfenbao.png,ui/Fashion/Fashion_qingfenbao.png,1,7#50|30#350|0#1200,fla_baozixiaobing,,0
+2,蛮族人,ui/Icon/Icon_manzuren.png,ui/Fashion/Fashion_manzuren.png,0,7#180|30#380|0#980,fla_yemanren,2000001,7
+3,鬼武者,ui/Icon/Icon_guiwuzhe.png,ui/Fashion/Fashion_guiwuzhe.png,0,7#180|30#380|0#980,fla_wushi,2000002,7
+4,近卫军,ui/Icon/Icon_jinweijun.png,ui/Fashion/Fashion_jinweijun.png,0,7#180|30#380|0#980,fla_xiaobing,2000003,7
+5,斯巴达,ui/Icon/Icon_shibada.png,ui/Fashion/Fashion_shibada.png,0,7#180|30#380|0#980,fla_sibada,2000004,7
+6,骷髅鬼,ui/Icon/Icon_kulougui.png,ui/Fashion/Fashion_kulougui.png,0,7#298|30#680|0#1880,fla_kuloubing,2000005,0
+7,机器人,ui/Icon/Icon_jiqiren.png,ui/Fashion/Fashion_jiqiren.png,0,7#298|30#680|0#1880,fla_jiqiren,2000006,0
+8,坦克人,ui/Icon/Icon_tangkeren.png,ui/Fashion/Fashion_tangkeren.png,2,7#298|30#680|0#1880,fla_tankeren,2000007,0

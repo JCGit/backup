@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../javascript/jquery-2.2.2.min.js"></script>
+    <script src="../javascript/script.js"></script>
+
+    <script type="text/javascript">
+
+        $(function(){
+            if ($(".platform").val() == 0){
+                $(".platform").parents('div').append('<div class=ip style="margin-left: 160px;margin-top: 10px">ip : <input value="127.0.0.1" onkeyup="if(/\D/.test(this.value)){alert("只能输入数字");this.value=\'\';}" name="ip" type="text" /><span style="color:Red">此地址用于测试时填的<span><div>')
+            }
+        })
+        function platformChange(){
+            if ($('.platform').val() == 0){
+                $(".platform").parents('div').append('<div class=ip style="margin-left: 160px;margin-top: 10px">ip : <input value="127.0.0.1" onkeyup="if(/\D/.test(this.value)){alert("只能输入数字");this.value=\'\';}" name="ip" type="text" /><span style="color:Red">此地址用于测试时填的<span><div>')
+            }else{
+                $(".ip").remove()
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div style="margin-left: auto; margin-right: auto; width:700px">
+        <select class="platform" style="width:120px; height: 40px; margin-left: 200px; color: red" onchange="platformChange()">
+            <option value="0">测试</option>
+            <option value="1">腾讯</option>
+            <option value="2">联想</option>
+        </select>
+    </div>
+    <div class="content" style="margin-left: auto; margin-right: auto; width:1000px">
+        <ul class="left">
+            <li current="current" data-type="2">停服白名单</li>
+            <li data-type="3">负载均衡</li>
+            <li data-type="4">灰度发布</li>
+            <li data-type="5">配置加载</li>
+            <li data-type="6">提审操作</li>
+        </ul>
+        <div class="right">
+            <!-- <ul></ul> -->
+        </div>
+    </div>
+</body>
+
+<html>

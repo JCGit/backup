@@ -1,0 +1,131 @@
+package fgame;
+option optimize_for = LITE_RUNTIME;
+
+import "Friend.proto";
+import "Player.proto";
+
+
+////////////////////////////////////    个人房间消息定义开始   ////////////////////////////////////
+message CSPersonalRoomCreateReq{
+
+}
+
+message CSPersonalRoomCreateResp{
+    required uint32 RoomID = 1; // room_id不为0表示创建成功
+}
+
+message CSPersonalRoomPlayerInfo{
+    required uint64 Uin = 1;
+    required string Name = 2;
+    required string Icon = 3;
+    required uint32 Group = 4;
+    required uint32 Rank = 5;
+    required uint32 WinRate = 6;
+    required uint32 Index = 7;
+    optional uint32 Score = 8; //积分
+    optional uint64 Title = 9;
+    optional uint32 Level = 10;
+    optional uint32 VipLevel = 11; // 1.白银 2.黄金 3.钻石
+}
+
+message CSPersonalRoomEnterReq{
+    required uint32 RoomID = 1; // 请求进入的房间id
+    optional string ServerNode = 2; //房间所在节点服
+}
+
+message CSPersonalRoomEnterResp{
+    required uint32 RoomID = 1; // room_id不为0表示进入成功
+    repeated CSPersonalRoomPlayerInfo Players = 2;
+    optional uint64 LeftSeconds = 3;
+    optional uint32 RoomType = 4;
+}
+
+message CSPersonalRoomLeaveReq{
+    required uint32 RoomID = 1; // 请求进入的房间id
+}
+
+message CSPersonalRoomLeaveResp{
+    required uint64 Uin = 1;
+    optional uint32 RoomID = 2;
+}
+
+message CSPersonalRoomKickReq{
+    required uint64 Uin = 1;
+}
+
+message CSPersonalRoomKickResp{
+    required uint64 Uin = 1;
+}
+
+message CSPersonalRoomInviteReq{
+    required uint64 Uin = 1;
+}
+
+message CSPersonalRoomInviteResp{
+    required uint64 Uin = 1;
+    optional FriendPkRequestInfo Info = 2;
+}
+
+message CSPersonalRoomBroadcastReq{
+}
+
+message CSPersonalRoomBroadcastResp{
+    required uint64 Uin = 1;
+    required string Name = 2;
+    required uint32 RoomID = 3;
+    required uint64 Time = 4;
+    optional string Icon = 5;
+    optional string ServerNode = 6; //房间所在服节点名
+    optional uint32 Title   = 7; //发起挑战人的称号
+    optional uint32 VipLevel = 8;   // 1.白银 2.黄金 3.钻石
+}
+
+message CSPersonalRoomChatReq{
+    required uint32 ID = 1;
+    optional string Words = 2;
+}
+
+message CSPersonalRoomChatResp{
+    required uint64 Uin = 1;
+    required uint32 ID = 2;
+    required string Words = 3;
+}
+
+message CSPersonalRoomModeReq{
+    required uint32 Mode = 1;
+}
+
+message CSPersonalRoomModeResp{
+    required uint32 Mode = 1;
+}
+
+message CSPersonalRoomBeginFightReq{
+}
+
+message CSPersonalRoomBeginFightResp{
+    required uint32 RoomID = 1;
+}
+
+message CSPersonalRoomApplyOrRefuseInviteReq{
+    required bool IsApply = 1;
+    required uint32 RoomID = 2;
+    required uint64 Uin = 3; //房主Uin
+}
+
+message CSPersonalRoomApplyOrRefuseInviteResp{
+     required bool IsApply = 1;
+     optional uint32 RoomID = 2;
+}
+
+message CSPersonalRoomCountDownReq{
+    required uint32 RoomID = 1;
+}
+
+message CSPersonalRoomCountDownResp{
+     required uint32 RoomID = 1;
+     required uint32 Seconds = 2;
+}
+
+////////////////////////////////////    个人房间消息定义结束   ////////////////////////////////////
+
+

@@ -1,0 +1,79 @@
+#include "version.h"
+package fgame;
+option optimize_for = LITE_RUNTIME;
+
+message CSErrorMsg{
+    required uint32 ErrCode = 1;
+}
+
+//登陆
+message CSLoginReq{
+    required string OpenId = 1;
+    required uint32 ChannelId = 2;
+    optional string Token = 3;
+    optional string Params = 4;
+    optional string SecretKey = 5;
+    optional string GameServerName = 6;
+    optional uint32 Version = 7;
+}
+
+message CSLoginResp{
+    required uint64 Uin = 1;
+    optional string GameServerAddr = 2;
+    optional string OpenId = 3; //有些平台需要在认证后才返回uid也即openid
+    optional string AuthToken = 4; //第三方登录时服务器拿token
+    optional uint32 GrayRelease = 5; //灰度标识
+    optional uint32 StopGameFlag = 6; //停服标识
+}
+
+message CSLogoutReq{
+    required uint64 Uin = 1;
+}
+
+//注册
+message CSRegReq{
+    required string Account = 1;
+    required string Pwd     = 2;
+}
+
+message CSRegResp{
+    required uint64 Uin = 1;
+}
+
+//心跳
+message CSHeartBeatReq{
+}
+
+message CSKickPlayerReq{
+
+}
+
+//停服踢号协议
+message CSStopKickPlayerReq{
+
+}
+
+message CSHeartBeatResp{
+    required uint32 Ret = 1;
+    optional uint32 Ts = 2;
+}
+
+message CSRequestPKeyReq {
+    required bytes dummy    = 1;
+    required int32 not_used = 2;
+}
+
+message CSRequestPKeyResp {
+    required uint32 pkey_id = 1; // 公钥编号
+    required string pkey    = 2; // 公钥内容 PEM格式
+}
+
+message CSSendClientKeyReq {
+    required bytes client_key = 1; // 客户端提供的部分密钥,真正的密钥
+}
+
+message CSSendClientKeyResp {
+    required bool ok        = 1; // 服务器是否成功处理
+    required bytes  s_key   = 2; // 服务器提供的部分密钥
+    required string payload = 3; // 消息 alice
+}

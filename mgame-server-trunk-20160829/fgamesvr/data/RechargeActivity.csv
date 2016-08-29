@@ -1,0 +1,3 @@
+id,stage,start_time,end_time,recharge_type,recharge_num,reward
+id 不重复就行,期数,开始时间(yyyy-MM-dd HH:mm:ss),结束时间,充值类型1首冲2每日3累计,充值数量,奖励
+1,1,#20150900000000,#20380101000000,1,1,431

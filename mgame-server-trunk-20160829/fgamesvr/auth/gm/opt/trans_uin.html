@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>转换UIN</title>
+   <meta charset="UTF-8">
+<script type="text/javascript" charset="UTF-8" src="javascript/jquery-2.2.2.min.js"></script>
+<script type="text/javascript">
+$("document").ready(function() {
+    $("#trans_btn").click(function() {
+        $.ajax({
+            url: "opt/trans_uin.php",
+            type: "GET",
+            dataType: "json",
+            data: { uin: $("#uin").val() },
+            success: function(data, textStatus, jqXHR) {
+                var ret = data.uin;
+                $("#result").html('');
+                $("#result").append(ret);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                var ret = "Something is wrong with server. textStatus: ".concat(textStatus);
+                $("#result").html('');
+                $("#result").append(ret);
+            }
+        });
+    });
+});
+</script>
+</head>
+<body>
+    <div align="right">
+    <h1>转换UIN</h1>
+    <div>
+       UIN:
+       <input type="text" id="uin" name="uin" onkeyup="if(/\D/.test(this.value)){alert('只能输入数字');this.value='';}"/>
+    </div>
+    <input type="submit" id="trans_btn" value="转换" />
+    <div id="result"></div>
+    </div>
+</body>
+</html>

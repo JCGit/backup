@@ -1,0 +1,40 @@
+local function concat_path(args)
+    local r = ''
+    for i = 1, # args do
+        r = r .. ';' .. args[i]
+    end
+    return r
+end
+
+thread    = 1
+harbor    = 0
+start     = "transod_main"  -- main script
+bootstrap = "snlua bootstrap"   -- The service for bootstrap
+
+skynet_root = "../skynet/"
+root        = "./"
+
+lua_path   = concat_path {
+    skynet_root.."lualib/?.lua",
+    root.."lualib/?.lua",
+    root.."script/game/?.lua",
+    root.."script/common/?.lua",
+    root.."script/?.lua",
+    root.."setting/?.lua",
+    root.."transod/?.lua",
+}
+
+luaservice = concat_path {
+    skynet_root.."service/?.lua",
+    root.."script/game/?.lua",
+    root.."script/common/?.lua",
+    root.."script/?.lua",
+    root.."transod/?.lua",
+}
+
+lua_cpath  = skynet_root.."luaclib/?.so;"..root.."luaclib/?.so"
+cpath      = skynet_root.."cservice/?.so;"..root.."cservice/?.so"
+lualoader  = skynet_root.."lualib/loader.lua"
+snax       = skynet_root.."?.lua;"
+
+cluster    = "setting/clustername.lua"

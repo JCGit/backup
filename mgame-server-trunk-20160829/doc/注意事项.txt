@@ -1,0 +1,49 @@
+1.使用pbc的问题：
+message CSMessage{
+    repeated CSInfo	info	= 1;
+    required uint32	time 	= 2;
+}
+
+local decode = protobuf.decode(msg)
+如果直接使用decode decode.data传递给其他服务，在其他服务接收处发现这个数据跟decode.data数据已经不一样了
+使用pbc的时候 如果遇到decode中有元表 则需要对decode深拷贝 不能直接在服务间传decode数据
+proto.parse_proto_req(cmdid, msg, sz)这个api不能在proto以外的地方用
+
+2. getmetable如果有 __index 这种表， 用 utils.var_dump, utils.copy, 会到导致栈溢出，初步分析是一个即使是空表，但只要有元表，就会导致 递归判断表是仍然是表,
+	通过 for k,v in pairs(table) 打印发现有这三个k, _CObj，_Parent， _CType(这是pbc里生成的), 然后就递归调用了. 
+	先暂且记下这个问题， protobuf.decode("Msg", data, sz), data为nil，然后再用utils.var_dump, utils.copy， 就会出现这个现象
+	
+3 skynet.call的时候 不能传服务id<=0的服务 否则函数不往下执行了
+    云风已经修改了 最新版本这里会给ERROR了
+    https://github.com/cloudwu/skynet/commit/a38a3140dde2e8d20aadbe9dd04b8d4c0a14e37b
+
+4 配置文件暂时只支持在windows下面生成 需要安装lua5.1的版本 lfs,luaXml库
+csv转换工具 : 在工程目录建一个table文件夹 和tools平行 将需要用到的tmx文件放到map下面 生成的文件的在fgamesvr\data下面
+tmx解析工具 : 在工程目录建一个map文件夹 和tools平行 将需要用到的tmx文件放到map下面 生成的文件的在fgamesvr\data下面
+
+5 lua参数不能和里面的变量名同名
+
+6 sharedata::query的值可能含有元表 在skynet.call传递的过程中会出问题
+    如果要传递 要么深拷贝一份 要么自己序列化
+    最好的方法是直接在用的地方取
+
+7 proto出现过这种情况：后端可以解析出来,前端解析不出来
+   解决方法是重新生成skynet.so(...表示怀疑...)
+
+8 用skynet.exit的时候 如果通过skynet.call()调用来销毁自己 这个地方得用pcall调用 否则会报错
+
+9 本来proto.parse_proto_req中有用 utils.var_dump 和 utils.copy, 后来有个bug, 只要protobuf中一个协议中有个optional字段没有传，就会导致 proto.parse_proto_req的返回值为 nil,
+  后来在proto.parse_proto_req直接返回， 没有再调用utils.copy. 但是不经过utils.copy,要想在服务间传递proto直接解析的数据，就会出现 1.的问题，这时就需要需要拷贝的人，在业务层做这个拷贝，
+  而不把深拷贝放到proto.parse_proto_req中
+
+10 关于skynet.time()执行问题：
+  create_time = math.floor(skynet.time()) 代码执行一次之后, 其值不会因为对creat_time取值而进行改变,也就是说不会再重新
+  调用skynet.time(),同样，不对create_time重新赋值的话,其值就是第一次执行的值。要修改create_time的值，则需要显示的调用skynet.time()
+
+11 一般不在循环中删除，在循环中删除会造成一些错误。这是可以建立一个remove表用来标记将要删除的，然后再用倒序删除方式移除
+
+12 pbc的代码里面有个问题， 对于optional uint32 字段为0的情况， 在protobuf打包的时候不会打入二进制中, 导致客户端解析不了， 后分析pbc的源码发现在
+    wmessage.c中的147号： if (f->label == LABEL_OPTIONAL)  这里对于是默认值得int类型，直接退出。 现修改pbc的代码把这块注释掉了
+13 更新data里的配置文件 修改lua文件上传，重新启动一次plan_service
+
+14 更新版本的时候 要执行一次initdb.sh

@@ -1,0 +1,25 @@
+目前包含三个服务器
+1、center_server 负责为客户端选择可用的login_server和game_server；另外负责平台sdk的接入(充值回调）
+2、login_server 负责处理用户账号验证请求
+3、game_server  负责处理游戏逻辑
+
+center_server功能及结构
+1、rechargeweb服务，处理http请求（目前主要是充值回调）
+2、center_server服务，对内接受login_server、game_server的注册、反注册。对客户端的请求分配并返回login_server、game_server信息。
+
+login_server功能及结构(login_server服务与game_server服务为一一对应关系，game_server向login_server注册自己以后，协同处理用户的登陆请求）
+1、login_server服务
+	处理客户端COMMON.MESSAGE.CS_CMD_LOGIN请求
+	   a、根据不同平台，先择相应的验证处理函数
+	   b、调用game_server服务的login函数
+	   c、返回客户端登陆结果
+	处理game_server注册自身的请求
+
+game_server功能及结构
+1、gameserver服务，主要生成一个gate_server，处理客户端连接请求，在客户端验证通过以后，生成agent,由agent处理客户端的socket数据
+1、agent.lua 处理客户端的请求
+   根据包头的命令字，找到相应的处理函数进行处理，典型的处理流程如下：
+   @1、proto析出需要的请求参数
+   @2、根据功能分配给相应服务进行处理
+   @3、如果有返回，返回对应消息给客户端
+		

@@ -1,0 +1,42 @@
+1、客户端向center_server请求获取login_server和game_server信息
+	COMMON.MESSAGE.CS_CMD_GETSERVER
+client--------------------------------------->center_server
+2、center_server选择一组login_server和game_server信息返回给客户端
+	COMMON.MESSAGE.CS_CMD_GETSERVER
+client<---------------------------------------center_server
+
+
+
+
+3、客户端向login_server请求登陆
+	    COMMON.MESSAGE.CS_CMD_LOGIN
+client--------------------------------------->login_server
+４、login_server服务根据平台，选择相应的验证处理函数进行验证(auth_handle)
+５、login_server请求调用game_server服务的login函数
+    skynet.call(gameserver, "lua", "login", openid, channelId, secret_key)
+６、game_server服务login处理
+　　a、生成序列号（如果已经有了不生成）
+    b、生成新的账号信息（如果已经有了不生成）
+    c、设置已经通过验证标记auth_user_list[uin] = true
+    d、返回生成的序列号
+7、login_server服务返回登陆结果给客户端
+	    COMMON.MESSAGE.CS_CMD_LOGIN
+client<---------------------------------------login_server
+
+
+
+8、客户端请求game_server服务登陆 
+	 COMMON.MESSAGE.CS_CMD_ENTER_SERVE
+client--------------------------------------->game_server
+
+9、game_server服务handler.message进行处理
+   a、如果当前服务器超过了上限人数，进行排队队列；如果排除队列已满，返回服务器已满
+   b、gamed.login_handler处理
+      如果之前已经有该账号的agent，则断掉之前的连接
+      将客户端socket fd和account加载到agent上 skynet.call(agent, "lua", "open", fd, account)
+	 @1、生成角色信息
+	 @2、获取角色物品 skynet.call(redis_service, "lua", "hget_obj", "item", account_info.uin)
+         @3、每日数据处理 daily_login_check
+      将之后所有socket消息转发给agent进行处理 gameserver.forward(fd, agent)
+
+

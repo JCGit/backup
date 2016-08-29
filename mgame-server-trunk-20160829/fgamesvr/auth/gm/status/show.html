@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <script src="../javascript/jquery-2.2.2.min.js"></script>
+    <!-- // <script src="script/cryptico.js"></script> -->
+
+    <script type="text/javascript">
+        
+        function doAction(host, opt, cfg){
+            $.ajax({
+                type:"GET",
+                url:"/status/start.php",
+                data:{host:host, opt:opt, config:cfg},
+                dataType:'json',
+                success: function(data) {
+                    if (data.ret != 0){
+                        alert(data.msg)
+                    }else{
+                        alert("成功^_^")
+                    }
+                },
+                error: function(data) {
+                    alert('http failed' + data);
+                }
+            }); 
+        }
+
+        function onClick(target){
+            $(target+' button').each(function(){
+                $(this).on('click',function(){
+                    var opt = $(this).attr('name')
+                    var pid = $(this).parents('tr').find('td').eq(1).html()
+                    var cfg = $(this).parents('tr').find('td').eq(3).html()
+                    var host = $(this).parents('tr').find('td').eq(0).html()
+                    if ( opt == "start"){
+                        if(confirm("^_^你确定启动在" + host + '的 ' + cfg + ' 进程吗？^_^')){
+                            doAction(host,opt,cfg)    
+                        }else{
+                            return
+                        }
+                    }else{
+                        if (pid == 0){
+                            alert("进程号不能为0^_^")
+                        }else{
+                            if(confirm("^_^你确定停止在" + host + '的 ' + cfg + ' 进程吗？^_^')){
+                                doAction(host,opt,cfg)    
+                            }else{
+                                return
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+        function appendData(platform, data){
+            var div = '.' + platform + ' .content'
+            var jObj = eval('(' + data.data + ')')
+            $.each(jObj,function(key,value){
+                for (var i = 0; i < value.length; i++) {
+                    var str = '<tr><td>' + key + '</td><td>'
+                    str += value[i][0] + '</td><td>'
+                    str += value[i][1] + '</td><td>'
+                    str += value[i][2] + '</td><td>'
+                    str += '<button name=start style=color:green>start</button>&nbsp<button name=stop style=color:red>stop</button>'
+                    $(div).append(str);
+                };
+            });
+            onClick('.' + platform + ' .content');
+        }
+
+        $(function(){
+            $.ajax({
+                type:"GET",
+                url:"/status/process.php",
+                data:{platform:'qq'},
+                dataType:'json',
+                success: function(data) {
+                    console.log(data);
+                    appendData('qq', data)
+                },
+                error: function(data) {
+                    alert('http failed' + data);
+                }
+            });
+
+            $.ajax({
+                type:"GET",
+                url:"/status/process.php",
+                data:{platform:'wx'},
+                dataType:'json',
+                success: function(data) {
+                    console.log(data);
+                    appendData('wx', data)
+                },
+                error: function(data) {
+                    alert('http failed' + data);
+                }
+            });
+        })
+
+        
+    </script>
+
+    <style type="text/css">
+
+        .qq, .wx {
+            width: 900px;
+            margin: 0 auto;;
+        }
+
+        .content td, .content th{
+            width: 100px;
+        }
+    
+    </style>
+
+</head>
+
+<body>
+
+    <div class="qq">
+        <p>QQ服进程列表</p>
+        <table class="content">
+            <tr>
+            <th>服务器</th>
+            <th>进程id</th>
+            <th>进程状态</th>
+            <th>进程名称</th>
+            <th>操作</th>
+            </tr>
+            </tr>
+        </table>
+    </div>
+
+    <div class="wx">
+        <p>微信服进程列表</p>
+        <table class="content">
+            <tr>
+            <th>服务器</th>
+            <th>进程id</th>
+            <th>进程状态</th>
+            <th>进程名称</th>
+            <th>操作</th>
+            </tr>
+        </table>
+    </div>
+
+</body>
+
+<html>

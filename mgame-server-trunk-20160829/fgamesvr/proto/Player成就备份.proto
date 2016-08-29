@@ -1,0 +1,820 @@
+package fgame;
+option optimize_for = LITE_RUNTIME;
+#include "version.h"
+
+message PropertyUpdateData
+{
+	required uint32 UpType = 1; //更新类型
+    optional uint32 Value  = 2; //值
+    optional uint32 Value2 = 3; //物品ID 如果是更新物品
+    optional string Extra  = 4; //额外数据
+}
+
+message CSQueryPlayerInfoReq{
+    required uint64 Uin = 1; //玩家uin
+}
+
+message CSQueryPlayerInfoResp{
+    required uint64 Uin      = 1; //uin
+    required string Name     = 2; //昵称
+    optional string Icon     = 3; //头像
+    optional uint64 Title    = 4; //称号
+    optional uint32 Level    = 5; //成就等级
+    optional uint32 Score    = 6; //分数
+    optional float  WinRate  = 7; //胜率
+    optional uint32 Group    = 8; //组别
+    optional uint32 Rank     = 9; //排名
+    optional uint32 ExpLevel = 10; //经验等级
+    optional uint32 Exp      = 11; //经验
+    optional uint32 GlyphsLevel = 12; //雕文总等级
+    optional uint32 MaxCheckPoint = 13; //最大关卡数
+    optional string Signature   = 14; //个性签名
+    optional uint32 VipLevel    = 15; //vip等级
+    optional bool Visible     = 16; //额外信息的可见性
+    optional uint32 Area  = 17;  //地区
+}
+
+//新手商城引导 修改玩家钻石
+message CSShopGuideReq{
+    required uint32 Diamond = 1; // 增加的钻石
+}
+
+message CSShopGuideResp{
+    required uint32 Ret = 1;
+    required uint32 Diamond = 2; // 返回目前拥有的钻石
+}
+
+message CSTestAddDiamondReq{
+    required uint32 Diamond = 1; // 增加的钻石
+}
+
+message CSSetTitleReq{
+    required uint32 Title = 1; //设置的称号
+}
+
+message CSSetTitleResp{
+    required uint32 Title = 1; //当前称号
+}
+
+message CSShopBuyReq{
+    required uint32 ShopId = 1; //商城礼包ID
+}
+
+message CSShopBuyResp{
+    required uint32 ShopId = 1; //商城货品ID
+}
+
+message CSShopListReq{
+}
+
+message DiamondData{
+    required uint32 ShopId    = 1; // 商城ID 钻石
+    optional bool   First     = 2; // 是否首次充值
+}
+
+message GiftData{
+    required uint32 ShopId    = 1; // 商城ID 配置文件的编号
+    required uint32 GiftId    = 2; // 礼品ID
+    required uint32 StartTime = 3; // 开始时间
+    required uint32 EndTime   = 4; // 结束时间
+    required uint32 LeftCount = 5; // 剩余数量
+    required string GiftName  = 6; // 礼包名
+    optional string Discount  = 7; // 折扣
+    optional uint32 Price     = 8; // 价格
+    required string GiftIcon  = 9; // 礼包图标
+}
+
+message CSShopListResp{
+    repeated DiamondData diamondList = 1; //钻石列表
+    repeated GiftData    giftList    = 2; //礼包列表
+}
+
+message ExchangeItemInfo {
+    required uint32 ItemId       = 1; // 兑换商品ID
+    required uint32 BuyLeftCount = 2; // 本轮该物品剩余兑换次数
+    //required uint32 LimitCount   = 3; // 本次全服可兑换的剩余数量
+    required uint32 RefreshTime  = 3; // 距离商品下架剩余时间(秒)
+}
+
+message CSExchangeItemReq {
+    required uint32 ItemId = 1; // 需要兑换的商品ID
+}
+
+message CSExchangeItemResp {
+    required ExchangeItemInfo ExchangeItem = 1; // 兑换的物品信息
+    required uint32 HonorCount             = 2; // 兑换后的荣誉点
+    required uint32 Ret                    = 3; // 是否有错误
+}
+
+message CSUpdateExchangeListReq {
+}
+
+message CSUpdateExchangeListResp {
+    repeated ExchangeItemInfo ExchangeItem = 1; // 兑换商品
+    required uint32 HonorCount             = 2; // 当前荣誉点
+}
+
+
+//修改头像
+message CSChangePlayerIconReq{
+    required string IconId = 1;
+}
+
+message CSChangePlayerIconResp{
+    required uint32 Ret = 1;
+    required string IconId = 2;
+}
+
+message CSSetNewBieReq{
+    repeated uint32 NewBieId = 1; //
+    optional bool isComplete = 2; //是否完成新手引导
+}
+
+message CSSetNewBieResp{
+}
+
+message CSGetNewBieListReq{
+}
+
+message CSGetNewBieListResp{
+    required bool isComplete = 1;
+    repeated uint32 NewBieIds = 2;
+}
+
+message CSSetNewBieOssReq{
+   required uint32 NewBieId = 1;
+}
+
+message CSSetNewBieOssResp{
+   required uint32 NewBieId = 1;
+}
+
+//通关大关卡
+message CSOpenBigStageReq{
+    required uint32 PointId = 1; //关卡id
+}
+
+message CSOpenBigStageResp{
+    required uint32 Ret = 1;
+    required uint32 PointId = 2; //关卡id
+}
+
+//进入关卡
+message CSEnterPointReq
+{
+    required uint32 PointId = 1; //关卡ID
+}
+
+//
+message CSEnterPointResp
+{
+    required uint32 PointId = 1; //关卡ID
+    required bool Ret = 2; //结果
+}
+
+//  道具
+message CSBuyITtemReq{
+    required uint32 ItemId = 1;
+    required uint32 Price = 2;
+    required uint32 Count = 3;
+    required uint32 From  = 4; //从哪里购买 0 : 普通商城购买  1 : pve 2 :  pvp
+}
+
+message CSBuyItemResp {
+    required uint32 Ret = 1;
+    required uint32 ItemId = 2;
+    required uint32 Count = 3;
+    required uint32 Price = 4;
+}
+
+
+message CSUseItemReq{
+    required uint32 ItemId = 1;
+    required uint32 Count = 2;
+}
+
+message CSUseItemResp{
+    required uint32 Ret = 1;
+    required uint32 ItemId = 2;
+}
+
+message CSBuyVipReq {
+    required uint32 VipLevel = 1; // 1.白银 2.黄金 3.钻石
+    required uint32 Price = 2;//购买会员所需价钱
+    required uint32 Payment = 3; //支付方式 1.荣誉 2.钻石 3.现金
+    required uint32 TimeType = 4; //1.7天 2.30天
+}
+
+message CSVipTimeReq {
+
+}
+
+message CSBuyVipResp {
+    optional uint32 VipLevel = 1; // 1.白银 2.黄金 3.钻石
+    optional string RemainTime = 2;//剩余时间 format "level|time#level|time"
+    optional uint32 Type = 3; // 1 : 代表购买会员时返回 其它可自定义
+}
+
+message CSPropertyUpdateResp
+{
+   repeated PropertyUpdateData UpdateData = 1;
+}
+
+//成就
+//查询
+message CSGetAchievementReq{
+
+}
+
+message CSGetAchievementInfo{
+    required uint32 Type  = 1;//成就id
+    required uint32 CompleteCount = 2;
+    repeated uint32 Rewarded_list = 3;//已领取的成就id
+}
+
+message CSGetAchievementResp{
+    repeated CSGetAchievementInfo Data = 1;//所有成就信息
+    required uint32 AchievementPointCount =2;//总成就点数
+    required uint32 AchievementLevel = 3;//成就等级
+}
+
+//领取成就点数礼包
+message CSReceiveAchievementReq{
+    required uint32 AchievementId = 1;//成就id
+}
+
+message CSReceiveAchievementResp{
+    required uint32 Ret =1; //0失败 1 成功
+    required uint32 AchievementId = 2;
+}
+//领取成就等级礼包
+message CSReceiveAchievementRewardReq{
+}
+
+message CSReceiveAchievementRewardResp{
+    required uint32 Ret =1; //0失败 1 成功
+    required uint32 AchievementLevel = 2;
+}
+
+message CSUpdateAchievementResp{
+    required uint32 Type  = 1;//成就id
+    required uint32 CompleteCount = 2;
+}
+
+message CSGetAchievementComp{
+	required uint32 Id = 1;//成就id
+	required uint32 Count = 2;//完成数量
+}
+
+message CSGetAchievementCompReq{
+}
+
+message CSGetAchievementCompResp{
+	repeated CSGetAchievementComp Comps = 1;
+}
+
+/// 7日签到 ////
+// 请求获取签到列表
+message CSSevenDaySignListReq{
+}
+
+message CSSevenDayGetList{
+    required bool isGet = 1; // 是否获取
+    required bool isNewGift = 2; // 是否新手礼包
+}
+
+message CSSevenDaySignListResp{
+    required uint32 nowDay = 1; // 今天是第几天
+    repeated CSSevenDayGetList getList = 2; // 获取列表（数组）
+}
+
+// 请求签到
+message CSSevenDaySignReq{
+}
+
+message CSSevenDaySignResp{
+    required uint32 giftId  = 1; // 礼包id，0表示领取失败
+}
+
+
+///////////////////////////////////////////
+
+//中心服相关通信协议
+message CSGetServerReq{
+    required string OpenId = 1;
+    optional uint32 LastTs = 2;
+    optional string GameServerName = 3;
+    optional uint64 Uin = 4;
+    optional string  Version = 5;
+}
+
+message CSGetServerResp{
+    required string LoginServer = 1;
+    optional string GameServer = 2;
+    optional string GameServerName = 3;
+    optional uint32 WhiteUpdate = 4;
+}
+
+//登进相关通信协议
+message CSEnterServerReq{
+    required uint64 Uin = 1;
+    required string OpenId = 2;
+    required uint32 Retry = 3;  //是否是断线重连后发来的报
+    optional string  IMEI = 4;
+    optional string  Version = 5;
+}
+
+message CSEnterServerResp{
+    required uint32 Overload = 1; //过载情况  0:OK 1:Over
+    optional uint32 ForceExit = 2; //强制退出
+    optional uint32 Wait_Num = 3;
+    optional string GameServerName = 4;
+    optional uint32 Ts = 5;
+}
+
+message CSCanEnterReq{
+    required uint64 Uin = 1;
+}
+
+message CSDirectEnterReq{
+    required uint64 Uin = 1;
+}
+
+message CSDircetEnterResp
+{
+    required uint32 Ret = 1;
+}
+
+//排队协议
+message CSQueueReq{
+    required uint64 Uin = 1;
+    required uint32 Remain_Num = 2;
+}
+
+message CSStreakWinValueReq{
+    required uint64 Uin = 1;
+}
+
+message CSStreakWinValueResp{
+    required uint32 Ret = 1;//0未领取 1 领取
+    required uint32 StreakWinValue = 2; //连胜值
+    optional uint32 GetWinValue = 3; //当日已领取连胜奖励场数
+}
+
+message CSStreakWinGetReq{
+    required uint32 StreakWinValue = 1; //连胜值
+}
+
+message CSStreakWinGetResp{
+    required uint32 Ret = 1;//0失败 1 成功领取
+    required uint32 DiamondValue = 2;
+}
+
+//物品
+message CSItem{
+  required uint32 ItemId = 1;
+  required uint32 Count = 2;
+}
+
+//请求玩家信息
+message CSSycPlayerInfoReq{
+}
+
+message CSTitleItem{
+    required uint32 Type = 1;
+    required uint32 Time = 2;
+}
+
+
+message CSSycPlayerInfoResp{
+    required uint32 PlayerTitle     = 1; // 称号
+    required uint32 Energy          = 2; // 精力
+    optional string Name            = 3; // 玩家名称
+    optional uint32 ChangeNameCount = 4; // 玩家修改名称次数
+    optional uint32 EnergyBuyCount  = 5; // 精力购买次数
+    optional uint32 Diamond         = 6; // 钻石数
+    optional string IconId          = 7; // 角色图标id
+    optional uint32 EnergySlot      = 8;
+    optional uint32 Power           = 9;
+    optional uint32 PowerSlot       = 10;
+    repeated CSItem Items           = 11;
+    optional uint32 MonthCardDays   = 12;
+    optional uint32 ShopGuide       = 13; // 商城新三引导次数 0没有引导  1 完成过了引导
+    repeated uint32 TitleList       = 14; // 称号list  废弃,此字段被20取代
+    optional uint32 RoomTicket      = 15; // 开房券
+    optional uint32 VipLevel        = 16; // 1.白银 2.黄金 3.钻石
+    optional string RemainTime      = 17; // 剩余时间 format "level|time#level|time"
+    optional uint32 ExpLevel        = 18; // 经验等级
+    optional uint32 Exp             = 19; // 当前等级经验
+    repeated CSTitleItem TitleItems = 20; // 勋章称号列表
+    optional uint32 Rank            = 21; // 排名   -- client add
+    optional float WinRate          = 22; // 胜率   -- client add
+    optional uint32 Score           = 23; // 积分   -- client add
+    optional uint32 AchievementLevel= 24; // 成就等级   -- client add
+    optional uint32 HonorCount      = 25; // 荣誉点   -- client add
+    optional uint32 PvpRound        = 26; // Pvp参与场数   -- client add
+    optional uint32 AddExp          = 27; // 增加的经验   -- client add
+    optional uint32 GlyphGuide      = 28; // 符文引导次数   -- client add
+    optional uint32 ChatFreeCount   = 29; // 免费聊天次数
+    optional uint32 TimeLeft        = 30; // 下次免费聊天时间刷新时
+    optional uint32 Area            = 31; //地区
+    
+    //mplus------
+#if(VERSION == VERSION_MPLUS)
+    optional string IconUrl = 100;
+    optional string InviteCode = 101;
+    optional bool CanInvite = 102; //0：可以邀请
+    //optional bool CanFiveStar = 33;
+#endif
+}
+
+// 请求保存角色数据
+message CSSyncPlayerDataReq{
+    required string PlayerData =1;
+}
+
+// 请求保存角色数据返回
+message CSSyncPlayerDataResp{
+    required uint32 Ret =1;
+}
+
+// 请求获取角色数据
+message CSGetPlayerDataReq{
+
+}
+// 返回角色数据
+message CSGetPlayerDataResp{
+    required uint32 Ret = 1;
+    required string PlayerData =2; // 找不到 返回 ""
+}
+
+//广播类消息处理-（服务器主动下发）
+message CSNoticeReq{
+    required uint32 NoticeType = 1;//1跑马灯 2 公告
+    required uint32 Serious = 2;//0普通 1 紧急 2 强制退出
+    required string Content = 3;//内容
+    optional string Title = 4;//标题(公告)
+    optional uint32 Count = 5;//播放次数
+    optional uint32 TimeGap = 6;//间隔时间(秒)
+}
+
+//修改名字, 地区
+message CSChangeNameReq{
+    optional string Name = 1;
+    optional uint32 Area = 2;
+}
+
+message CSChangeNameResp{
+    required uint32 Ret = 1;
+}
+
+message CSGMCmdReq{
+    required uint32 GMType  = 1; //GM类型[ 1,体力 2,精力 3,钻石]
+    optional uint32 Value   = 2; //对应类型的值
+}
+
+//新手引导记录
+message CSXinShouRecodeReq{
+    required uint32 Id = 1;
+}
+
+message CSXinShouRecodeResp{
+
+}
+
+//任务
+message CSMission{
+   required uint32 MissionId = 1;
+   optional uint32 Value = 2;
+   optional bool   Completed = 3;
+   optional uint32 Request = 4;
+   optional uint32 GiftId = 5;  //下面的都不需要,通过礼包来配置
+   //optional uint32 Diamond = 4;
+   //optional uint32 Power = 5;
+   //optional uint32 Energy = 6;
+   //repeated CSItem Items = 7;
+   //optional uint32 RoomTicket = 8;
+   //optional uint32 Request = 9;
+
+}
+
+//请求每日任务列表
+message CSMissionListReq{
+
+}
+
+//返回每日任务列表
+message CSMissionListResp{
+   optional uint32 MissionDay = 1;
+   repeated CSMission Missions = 2;
+}
+
+message CSMissionCompleteReq{
+   required uint32 MissionId = 1;
+}
+
+message CSMissionCompleteResp{
+   required CSMission Mission = 1;
+}
+
+message CSMissionUpdateResp{
+   required uint32 MissionId = 1;
+   required uint32 Value = 2;
+}
+
+
+//购买新手礼包
+message CSBuyNewbieGiftReq{
+    required uint32 Id = 1;
+}
+
+message CSBuyNewbieGiftResp{
+    required uint32 Ret = 1;
+}
+
+//邮件相关
+message CSMailInfo{
+    required uint32 Id = 1;
+    required string Title = 2;
+    required string Content = 3;
+    required string PlugIn = 4;
+    required uint32 SendTime = 5;
+    required uint32 OutDate = 6;
+}
+
+message CSGetMailReq{
+    required uint32 GetNum = 1; //已获取邮件数
+}
+
+message CSGetMailResp{
+    optional bool NewMail = 1;  //是否有新邮件
+    optional uint32 MailNO = 2;
+    repeated CSMailInfo MailInfo = 3;
+}
+
+//删除邮件：
+message CSDelMailReq{
+    repeated uint32 Id = 1;
+}
+
+message CSDelMailResp{
+    repeated uint32 Ret = 1;
+}
+
+message CSNoticeMailReq{
+
+}
+
+// 联网充值成功后通知前端
+message CSRechargeCallbackReq{
+    required uint32 Id = 1;
+}
+
+message CSRechargeCallbackResp{
+    required uint32 Ret = 1;
+    required uint32 Id = 2;
+    required string OrderId = 3;
+}
+
+message CSUseGiftCodeReq{
+    required string GiftCode = 1;
+}
+
+
+message CSUseGiftCodeResp{
+    required uint32 Ret = 1;
+    required uint32 Reward = 2; // 返回礼包的奖励内容 giftId 若错误则返回 ""
+}
+
+// 关卡数据
+message CheckPtData
+{
+    optional uint32 id      = 1; //关卡id
+    optional uint32 stars   = 2; //关卡得到的星星数
+    optional bool   reward  = 3; //通关奖励 true 领取 false 未领取
+    optional uint32 BattleTime = 4; //战斗时长
+    optional bool   FullReward = 5; //满星奖励 true 领取 false 未领取
+    optional bool   Win = 6;  // true 胜利 false 失败
+    optional uint32 ChapterId = 7; //章节id 1 2 3
+    optional bool   Skip = 8; //是否跳过关卡
+    optional uint32   Score = 9; //pve分数
+}
+
+//设置关卡数据
+message CSSaveCheckPtDataReq
+{
+   required CheckPtData CPData = 1;
+   required uint32 OpenCheckPtId = 2;  //打开的关卡ID
+}
+
+message CSSaveCheckPtDataResp
+{
+   optional uint32 id = 1;        //关卡号
+   optional bool reward = 2;      //通关奖励
+   optional bool FullReward = 3;  //满星奖励
+   optional string Stars = 4; //每个章节关卡星星数 format : 章节id|星星数#章节id|星星数
+   optional bool Win = 5; //当前关卡的战斗结果  true 胜利  false 失败
+   optional uint32 ShareId = 6;   //微信分享id
+   optional uint32 SkipNum = 7; //跳关卡次数
+    //optional uint32 FirstStars = 4; //第一章关卡获得的星星数
+   //optional uint32 SecondStars = 5; //第二章关卡获得的星星数
+   //optional uint32 ThreeStars = 6; //第三章关卡获得的星星数
+}
+
+//领取pve关卡中的奖励(通关奖励、满星奖励)
+message CSRetriveCheckPtRewardReq
+{
+    required uint32 Id = 1;
+    required uint32 RewardType = 2;
+}
+
+message CSRetriveCheckPtRewardResp
+{
+    required uint32 Id = 1;
+    required uint32 RewardType = 2;
+    optional bool Ret = 3;
+}
+
+//获取已经通过的关卡数据
+message CSGetCheckPtDataReq
+{
+}
+
+message ChapterData
+{
+    required uint32 ChapterId = 1; //所属章节
+    repeated CheckPtData CpData = 2; //章节下面的关卡
+    required uint32 Stars = 3;   //章节所获得的星星数
+    required uint32 Chest = 4;   //已领取的宝箱个数
+    required uint32 MaxCpId = 5; //当前章节最大的关卡ID
+}
+
+message CSGetCheckPtDataResp
+{
+   repeated ChapterData Data = 1;  //章节对应的关卡信息
+   optional uint32 SkipNum   = 2;  //跳关卡次数
+}
+
+//章节解锁请求
+message CSChapterUnlockReq
+{
+    required uint32 ChapterId = 1; //需要解锁的章节id
+    required uint32 UnlockBy = 2; //解锁原由 1 : 条件  2 : 钻石
+}
+
+message CSChapterUnlockResp
+{
+    required uint32 ChapterId = 1; //被解锁的章节id
+    required uint32 UnlockBy = 2; //解锁原由 1 : 条件  2 : 钻石
+}
+
+//宝箱领取
+message CSGetChestReq
+{
+    required uint32 ChapterId = 1; //章节id
+    required uint32 ChestId = 2; //宝箱id
+    required uint32 ChestGift = 3; //宝箱id对应的礼包id
+}
+
+message CSGetChestResp
+{
+    required uint32 ChapterId = 1; //章节id
+    required uint32 Chest = 2; //已领取的宝箱个数
+}
+
+message CSPveNotifyReq
+{
+    required uint32 CheckPoint = 1; //关卡Id
+    required uint32 Action = 2; //标识进入、重置、退出分别为(1,2,3)
+    required uint32 ChapterId = 3; //所属章节
+    required bool   NeedPower = 4; //扣体力标识
+    optional uint32 BattleTime = 5; //重新开始记录战斗时长
+}
+
+message CSPveNotifyResp
+{
+    required bool NeedPower = 1; //扣体力标识
+}
+
+message CSPveCheckAwardReq {
+}
+
+message CSPveCheckAwardResp {
+    required bool   HaveAward = 1; // 是否拥有奖励
+    optional uint32 GiftID    = 2; // 奖励ID，gift表中的编号
+}
+
+//pve 排行榜
+message CSPvePveRank {
+    required uint32 CpId        = 1; // pve关卡id
+    repeated CSPveRankData Data = 2; //排名数据
+}
+
+message CSPveRankData {
+    optional uint32  Rank   = 1; //名次
+    optional uint32 Uin    = 2; //玩家Id    
+    optional string Name   = 3; //玩家昵称
+    optional string Avator = 4; //玩家头像
+    optional uint32 Score  = 5; //玩家pve关卡的积分
+}
+
+message CSPveRankReq {
+    
+}
+
+message CSPveRankResp {
+    repeated CSPvePveRank Rank = 1;
+}
+
+message CSOpenChestResp{
+    repeated PropertyUpdateData UpdateData = 1;
+}
+
+message CSSetSignatureReq{
+    required string Signature = 1; //个性签名
+}
+
+message CSSetSignatureResp{
+    required string Signature = 1; //个性签名
+}
+
+message CSSetExtraInfoVisibleReq{
+    required bool Visible = 1; //是否可见
+}
+
+message CSSetExtraInfoVisibleResp{
+    required bool Visible = 1; //是否可见
+}
+
+message CSGetExtraInfoReq{
+    required uint64 Uin = 1;
+}
+
+message CSGetExtraInfoResp{
+    optional uint64 Uin             = 1;
+    optional uint32 TotalPvpCount   = 2; //pvp总场次
+    optional uint32 TotalPveCount   = 3; //pve总场次
+    optional uint32 TotalPvpUseItem = 4; //pvp使用道具总次数
+    optional uint32 TotalPveUseItem = 5; //pve使用道具总次数
+    optional uint32 MaxPvpPoint     = 6; //最大pvp积分
+    optional uint32 MaxPvpWinCount  = 7; //pvp最大连胜
+}
+
+message CSShareRewardGetResq{
+    required uint32 Ret = 1;//0未领取 1 领取
+    required uint32 ShareId = 2;
+}
+
+message CSShareRewardGetReq{
+    required uint32 ShareId = 1; //分享id
+}
+
+//七日目标活动
+message CSGetSevenGoalListReq{
+
+}
+
+message CSGetSevenGoalListResp{
+    required uint32  NowDay = 1;       //当前第几天
+    required bool    IsRetrived = 2;   //今天是否领取
+    required uint32  Num = 3;          //今天完成了第几次
+    required uint32  NextNum = 4;      //明天完成了几次
+}
+
+message CSNoticeSevenGoalResp{
+}
+
+message CSRetriveSevenGoalReq{
+    required uint32 NowDay = 1;
+}
+
+message CSRetriveSevenGoalResp{
+}
+
+#if(VERSION == VERSION_MPLUS)
+
+//mplus-------------
+message CSInviteCodeReq   {
+    required string InviteCode  = 1;
+}
+
+message CSInviteCodeResp {
+    required uint32 ret        = 1; // 服务器是否成功处理   0:成功 1：不存在 2：重复
+    optional uint32 GiftId = 2; //礼品ID
+}
+
+message CSFiveStarReq   {
+}
+
+message CSFiveStarResp  {
+    optional uint32 GiftId      = 1; //礼品ID
+}
+
+message CSWatchMovieReq{
+}
+
+message CSWatchMovieResp{
+    optional uint32 Ret         =1;  //0:成功，1:领取次数用完
+}
+
+#endif

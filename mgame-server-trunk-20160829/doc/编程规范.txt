@@ -1,0 +1,25 @@
+lua脚本：
+1. 一般注释都用 --, 只有大的chunk块时采用 --[[ --]]
+2. 常量写成全大写 例如：MAX_USER = 50
+3. 函数名用小写, 字段中间用 _ 来分割  例如： function get_power() 
+4. 变量采用小写	 例如：account_info
+5. 全局变量采用小写   例如 client_num
+6. 局部变量， 只要不是全局使用的，前面都要加local
+7. 对于命令的回调，全部采用采用 命令大写的方式，例如：local CMD 大写， 函数小写  function CMD.get() ... end
+8. 文件名：全小写， 可用 下划线分隔 _
+9. 函数中的参数， 要用一个空格进行分隔
+10. 函数后的括号，不要空格
+11. 程序打印日志尽量用 logger.trace, logger.debug等，不要用print
+12. 使用logger 打印日志时， 要求加上文件名， 函数名   room.lua:match > 
+
+agent模块编程规范：
+1 活动模块 activity_活动名
+2 其他模块 agent_模块名
+3 模块公共接口尽量统一
+    init(args)
+    add_cmd(cmd)
+    add_cmd_handle_mapping(cmd_handle_mapping)
+4 agent_player模块 玩家基础属性 玩家操作相关的 不好抽成模块的都可以放到这个模块
+5 模块能做的事尽量放到模块中去 尽量不要在agent中增加业务代码
+6 发送消息函数用send_response, send_error_code
+

@@ -1,0 +1,435 @@
+package fgame;
+option optimize_for = LITE_RUNTIME;
+
+#include "version.h"
+import "Message.proto";
+
+import "Base.proto";
+
+import "Glyphs.proto";
+import "PvpPersonalRoom.proto";
+import "Pvp.proto";
+import "Friend.proto";
+import "Activity.proto";
+import "Player.proto";
+import "Assistant.proto";
+import "Institute.proto";
+import "PvpChest.proto";
+
+message Dummy {
+    optional CS_CMD_ID dummy = 1; // to avoid protoc unused warning
+}
+
+message C2ServerMsg{
+    optional CSLoginReq                     Login_Req                       = 2;
+    optional CSRegReq                       Reg_Req                         = 3;
+    optional CSHeartBeatReq                 HeartBeat_Req                   = 4;
+    optional CSPvpMatchReq                  Match_Req                       = 5;
+    optional CSPvpStartReq                  Start_Req                       = 6;
+    optional CSPvpFightReq                  Fight_Req                       = 7;
+    optional CSPvpEndReq                    End_Req                         = 8;
+    optional CSPvpMapReq                    Map_Req                         = 9;
+    optional CSPvpUpgradeReq                Upgrade_Req                     = 10;
+    optional CSPvpPingReq                   Ping_Req                        = 13;
+    optional CSBuyITtemReq                  BuyItem_Req                     = 14;
+    optional CSUseItemReq                   UseItem_Req                     = 15;
+    optional CSPvpLeaveReq                  Leave_Req                       = 18;
+    optional CSGetAchievementReq            GetAchievementReq               = 19;
+    optional CSReceiveAchievementReq        ReceiveAchievement_Req          = 20;
+    optional CSReceiveAchievementRewardReq  ReceiveAchievementReward_Req    = 21;
+    optional CSEnterServerReq               EnterServer_Req                 = 22;
+    optional CSDirectEnterReq               DirectEnter_Req                 = 25;
+    optional CSPvpRankingGetListReq         PvpRankingGetList_Req           = 26;
+    optional CSStreakWinValueReq            StreakWinValue_Req              = 27;
+    optional CSStreakWinGetReq              StreakWinGet_Req                = 28;
+    optional CSPvpUseItemReq                PvpUseItem_Req                  = 30;
+    optional CSSevenDaySignListReq          SevenDaySignList_Req            = 31;
+    optional CSSevenDaySignReq              SevenDaySign_Req                = 32;
+    optional CSGetServerReq                 GetServer_Req                   = 33;
+    optional CSSycPlayerInfoReq             SycPlayerInfo_Req               = 34;
+    optional CSPvpStopMatchReq              StopMatch_Req                   = 36;
+    optional CSChangeNameReq                ChangeName_Req                  = 37;
+    optional CSLogoutReq                    Logout_Req                      = 38;
+    optional CSPvpRankingPlayerInfoReq      PvpRankingPlayerInfo_Req        = 42;
+    optional CSGetOpenActivityReq           GetOpenActivity_Req             = 43;
+    optional CSGetActivityDataReq           GetActivityData_Req             = 44;
+    optional CSReceiveActivityRewardReq     ReceiveActivityReward_Req       = 45;
+    optional CSMissionListReq               MissionList_Req                 = 46;
+    optional CSMissionCompleteReq           MissionComplete_Req             = 47;
+    optional CSGetPowerEnergyActivityDataReq GetPowerEnergyActivityData_Req = 49;
+    optional CSReceivePowerEnergyReq        ReceivePowerEnergy_Req          = 50;
+    optional CSGetMailReq                   GetMail_Req                     = 51;
+    optional CSDelMailReq                   DelMail_Req                     = 52;
+    optional CSBuyNewbieGiftReq             BuyNewbieGift_Req               = 54;
+    optional CSRechargeCallbackReq          RechargeCallback_Req            = 55;
+    optional CSFriendQueryReq               FriendQuery_Req                 = 56;
+    optional CSFriendRequestAddReq          FriendRequestAdd_Req            = 57;
+    optional CSFriendConfirmAddReq          FriendConfirmAdd_Req            = 58;
+    optional CSFriendGetInfoReq             FriendGetInfo_Req               = 59;
+    optional CSFriendRequestRemoveReq       FriendRequestRemove_Req         = 60;
+    optional CSFriendAddBlackListReq        FriendAddBlackList_Req          = 61;
+    optional CSFriendRemoveBlackListReq     FriendRemoveBlackList_Req       = 62;
+    optional CSPvpChatReq                   PvpChat_Req                     = 63;
+    optional CSUseGiftCodeReq               UseGiftCode_Req                 = 64;
+    optional CSQueryPlayerInfoReq           QueryPlayerInfo_Req             = 65;
+    optional CSPersonalRoomCreateReq        PersonalRoomCreate_Req          = 66;
+    optional CSPersonalRoomEnterReq         PersonalRoomEnter_Req           = 67;
+    optional CSPersonalRoomLeaveReq         PersonalRoomLeave_Req           = 68;
+    optional CSPersonalRoomKickReq          PersonalRoomKick_Req            = 69;
+    optional CSPersonalRoomInviteReq        PersonalRoomInvite_Req          = 70;
+    optional CSPersonalRoomBroadcastReq     PersonalRoomBroadcast_Req       = 71;
+    optional CSPersonalRoomChatReq          PersonalRoomChat_Req            = 72;
+    optional CSPersonalRoomModeReq          PersonalRoomMode_Req            = 73;
+    optional CSPersonalRoomBeginFightReq    PersonalRoomBeginFight_Req      = 74;
+    optional CSPersonalRoomApplyOrRefuseInviteReq PersonalRoomApplyOrRefuseInvite_Req = 76;
+    optional CSChangePlayerIconReq          ChangePlayerIcon_Req            = 77;
+    optional CSPersonalRoomCountDownReq     PersonalRoomCountDown_Req       = 78;
+    optional CSSyncPlayerDataReq            SyncPlayerData_Req              = 79;
+    optional CSGetPlayerDataReq             GetPlayerData_Req               = 80;
+    optional CSPvpAppearCreepReq            AppearCreep_Req                 = 81;
+    optional CSSaveCheckPtDataReq           SaveCheckPtData_Req             = 82;
+    optional CSGetCheckPtDataReq            GetCheckPtData_Req              = 83;
+    optional CSSetNewBieReq                 SetNewBie_Req                   = 84;
+    optional CSGetNewBieListReq             GetNewBieList_Req               = 85;
+    optional CSEnterPointReq                EnterPoint_Req                  = 87;
+    optional CSShopGuideReq                 ShopGuide_Req                   = 88;
+    optional CSActivityListReq              ActivityList_Req                = 90;
+    optional CSActivitySubmitReq            ActivitySubmit_Req              = 92;
+    optional CSSetTitleReq                  SetTitle_Req                    = 93;
+    optional CSShopBuyReq                   ShopBuy_Req                     = 94;
+    optional CSExchangeItemReq              ExchangeItem_Req                = 96;
+    optional CSActivityCrazyUsageReq        ActivityCrazyUsage_Req          = 98;
+    optional CSShopListReq                  ShopList_Req                    = 100;
+    optional CSPvpObserverReq               PvpObserver_Req                 = 101;
+    optional CSSetNewBieOssReq              SetNewBieOss_Req                = 102;
+    optional CSPvpResultReq                 PvpResult_Req                   = 104;
+    optional CSPvpSelfRankListReq           PvpSelfRankList_Req             = 105;
+
+    optional CSRequestPKeyReq               RequestPKey_Req                 = 114;
+    optional CSSendClientKeyReq             SendClientKey_Req               = 115;
+    optional CSUpdateExchangeListReq        UpdateExchangeList_Req          = 116;
+
+    optional CSGlyphsRequestInfoReq         GlyphsRequestInfo_Req           = 120;
+    optional CSGlyphsRequestBasicInfoReq    GlyphsRequestBasicInfo_Req      = 121;
+    optional CSGlyphsActiveReq              GlyphsActive_Req                = 122;
+    optional CSGlyphsUpgradeReq             GlyphsUpgrade_Req               = 123;
+    optional CSBuyVipReq                    BuyVip_Req                      = 125;
+
+    optional CSGlyphGuideReq                GlyphGuide_Req                  = 126;
+    optional CSNewYearGetInfoReq            NewYearGetInfo_Req              = 127;
+    optional CSNewYearRewardReq             NewYearReward_Req               = 128;
+    optional CSOpenChestReq                 OpenChest_Req                   = 129;
+    optional CSChristmasDecorateReq         ChristmasDecorate_Req           = 130;
+    optional CSChristmasTakeBonusReq        ChristmasTakeBonus_Req          = 131;
+    optional CSChristmasGetDataReq          ChristmasGetDate_Req            = 132;
+    optional CSChristmasGetRankReq          ChristmasGetRank_Req            = 133;
+
+    optional CSRetriveCheckPtRewardReq      RetriveCheckPtReward_Req        = 134;
+    optional CSVipTimeReq                   VipTime_Req                     = 135;
+    optional CSNewYearCmpReq                NewYearCmp_Req                  = 136;
+    optional CSNotifyGlyphsUpdateReq        NotifyGlyphsUpdate_Req          = 137;
+
+    optional CSPvpRecoverItemReq            RecoverItem_Req                 = 138;
+    optional CSSetSignatureReq              SetSignature_Req                = 139;
+    optional CSSetExtraInfoVisibleReq       SetExtraInfoVisible_Req         = 140;
+    optional CSGetExtraInfoReq              GetExtraInfo_Req                = 141;
+    optional CSValentineDataReq             ValentineData_Req               = 143;
+    optional CSValentineExchangeReq         ValentineExchange_Req           = 144;
+    optional CSRedPacketsGetInfoReq         RedPacketsGetInfo_Req           = 145;
+    optional CSRedPacketsGrebReq            RedPacketsGreb_Req              = 146;
+    optional CSRedPacketsOpenedReq          RedPacketsOpened_Req            = 147;
+    optional CSChapterUnlockReq             ChapterUnlock_Req               = 148;
+    optional CSGetChestReq                  GetChest_Req                    = 149;
+    optional CSPveNotifyReq                 PveNotify_Req                   = 150;
+
+    optional CSDailyTaskStatusReq           DailyTaskStatus_Req             = 152;
+    optional CSRequestDailyTaskReq          RequestDailyTask_Req            = 153;
+    optional CSChangeDailyTaskReq           ChangeDailyTask_Req             = 154;
+    optional CSOpenDailyTaskAwardReq        OpenDailyTaskAward_Req          = 155;
+    optional CSUpdateDailyTaskProgressReq   UpdateDailyTaskProgress_Req     = 156;
+    optional CSRankWeekRewardInfoReq        RankWeekRewardInfo_Req          = 157;
+    optional CSRankWeekRewardRewardReq      RankWeekRewardReward_Req        = 158;
+    optional CSPveCheckAwardReq             PveCheckAward_Req               = 159;
+    optional CSShareRewardGetReq            ShareReward_Req                 = 162;
+    optional CSGetSevenGoalListReq          GetSevenGoalList_Req            = 163;
+    optional CSRetriveSevenGoalReq          RetriveSevenGoal_Req            = 164;
+    optional CSPveScoreRankReq              PveScoreRank_Req                = 166;
+    optional CSTopRankReq                   TopRank_Req                     = 167;
+    optional CSTopRankTimeReq               TopRankTime_Req                 = 168;
+    optional CSPVPLuckChestInfoReq          PVPLuckChestInfo_Req            = 169;
+    optional CSPVPLuckChestOpenReq          PVPLuckChestOpen_Req            = 170;
+    optional CSPVPNormalChestInfoReq        PVPNormalChestInfo_Req          = 171;
+    optional CSPVPNormalChestOpenReq        PVPNormalChestOpen_Req          = 172;
+    optional CSPVPNormalChestSlotBuyReq     PVPNormalChestSlotBuy_Req       = 173;
+    optional CSPVPNormalChestClearTimeReq   PVPNormalChestClearTime_Req     = 174;
+    optional CSPvpTrapReq                   PvpTrap_Req                     = 175;
+    optional CSPayGuideBuyReq               PayGuideBuy_Req                 = 176;
+    optional CSPayGuideBuyShieldReq         PayGuideBuyShield_Req           = 177;
+    optional CSUpdateTaskStatusReq          UpdateTaskStatus_Req            = 201;
+
+    optional CSAsSyncInfoReq                AsSyncInfo_Req                  = 202;
+    optional CSAsNewAddReq                  AsNewAdd_Req                    = 203;
+    optional CSAsOperateReq                 AsOperate_Req                   = 204;
+    optional CSAsUseCardReq                 AsUseCard_Req                   = 205;
+
+    optional CSPvpUseSkillReq               PvpUseSkill_Req                 = 206;
+    optional CSInstituteInfoReq             InstituteInfo_Req               = 208;
+    optional CSInstituteBuyReq              InstituteBuy_Req                = 209;
+    //optional CSGetAchievementCompReq      GetAchievementComp_Req          = 210;
+    optional CSBuyNopropCountReq            BuyNopropCount_Req              = 211;
+    optional CSAsUpGradReq  			 	AsUpGrad_Req 					= 212;
+
+    optional CSSkinSyncReq                  SkinSync_Req                    = 213;
+    optional CSSkinUpDownReq                SkinUpDown_Req                  = 214;
+    optional CSSkinBuyReq                   SkinBuy_Req                     = 216;
+    optional CSSynLimitItemListReq          SynLimitItemList_Req            = 218;
+    optional CSSkinGuideReq                 SkinGuide_Req                   = 219;    
+    optional CSLimitExchangeReq             LimitExchange_Req               = 220;    
+    optional CSSumCallReq                   SumCall_Req                     = 221;
+    optional CSPvpHostReq                   PvpHost_Req                     = 222;
+    optional CSBattleGiftReq                BattleGift_Req                  = 223;
+    optional CSBattleScoreReq               BattleScore_Req                 = 224;
+    optional CSSumRechargeReq               SumRecharge_Req                 = 225;
+    optional CSPvpBattleFailReq             PvpBattleFail_Req               = 226;
+
+    //运营活动协议
+    optional CSOpActConfigListReq           OpActConfigList_Req             = 304;
+    optional CSOpActSelfDataListReq         OpActSelfDataList_Req           = 305;
+    optional CSOpActGlobalDataListReq       OpActGlobalDataList_Req         = 306;
+    optional CSOpActDemoTakeReq             OpActDemoTake_Req               = 310;
+    optional CSOpActExchangeReq             OpActExchange_Req               = 311;
+    optional CSMsgTransactionReq            MsgTransaction_Req              = 312;
+
+    optional CSPvpHappyItemsReq             PvpHappyItems_Req               = 313;
+    optional CSPvpHappyUseItemReq           PvpHappyUseItem_Req             = 314;
+
+    optional CSPaySuccessReq                PaySuccess_Req                  = 315;
+    optional CSBindOpenidReq                BindOpenid_Req                  = 316;
+
+#if(VERSION == VERSION_MPLUS)
+    optional CSWatchMovieReq                WatchMovie_Req                  = 800;
+    optional CSInviteCodeReq                InviteCode_Req                  = 801;
+    optional CSFiveStarReq                  FiveStar_Req                    = 802;
+    optional CSSycFriendListReq             SycFriendList_Req               = 803;
+#endif
+}
+
+//Req为服务器主动发送消息
+message S2ClientMsg{
+    optional CSErrorMsg                     Error_Msg                       = 1;
+    optional CSLoginResp                    Login_Resp                      = 2;
+    optional CSRegResp                      Reg_Resp                        = 3;
+    optional CSHeartBeatResp                HeartBeat_Resp                  = 4;
+    optional CSPvpMatchResp                 Match_Resp                      = 5;
+    optional CSPvpStartResp                 Start_Resp                      = 6;
+    optional CSPvpFightResp                 Fight_Resp                      = 7;
+    optional CSPvpEndResp                   End_Resp                        = 8;
+    optional CSPvpMapResp                   Map_Resp                        = 9;
+    optional CSPvpUpgradeResp               Upgrade_Resp                    = 10;
+    optional CSPvpPingResp                  Ping_Resp                       = 13;
+    optional CSBuyItemResp                  BuyItem_Resp                    = 14;
+    optional CSUseItemResp                  UseItem_Resp                    = 15;
+    optional CSPvpLeaveResp                 Leave_Resp                      = 18;
+    optional CSGetAchievementResp           GetAchievement_Resp             = 19;
+    optional CSReceiveAchievementResp       ReceiveAchievement_Resp         = 20;
+    optional CSReceiveAchievementRewardResp ReceiveAchievementReward_Resp   = 21;
+    optional CSEnterServerResp              EnterServer_Resp                = 22;
+    optional CSCanEnterReq                  CanEnter_Req                    = 23;
+    optional CSQueueReq                     Queue_Req                       = 24;
+    optional CSDircetEnterResp              DirectEnter_Resp                = 25;
+    optional CSPvpRankingGetListResp        PvpRankingGetList_Resp          = 26;
+    optional CSStreakWinValueResp           StreakWinValue_Resp             = 27;
+    optional CSStreakWinGetResp             StreakWinGet_Resp               = 28;
+    optional CSPvpUseItemResp               PvpUseItem_Resp                 = 30;
+    optional CSSevenDaySignListResp         SevenDaySignList_Resp           = 31;
+    optional CSSevenDaySignResp             SevenDaySign_Resp               = 32;
+    optional CSGetServerResp                GetServer_Resp                  = 33;
+    optional CSSycPlayerInfoResp            SycPlayerInfo_Resp              = 34;
+    optional CSNoticeReq                    Notice_Req                      = 35;
+    optional CSPvpStopMatchResp             StopMatch_Resp                  = 36;
+    optional CSChangeNameResp               ChangeName_Resp                 = 37;
+    optional CSGMCmdReq                     GMCmd_Req                       = 40;
+    optional CSPvpRankingPlayerInfoResp     PvpRankingPlayerInfo_Resp       = 42;
+    optional CSGetOpenActivityResp          GetOpenActivity_Resp            = 43;
+    optional CSGetActivityDataResp          GetActivityData_Resp            = 44;
+    optional CSReceiveActivityRewardResp    ReceiveActivityReward_Resp      = 45;
+    optional CSMissionListResp              MissionList_Resp                = 46;
+    optional CSMissionCompleteResp          MissionComplete_Resp            = 47;
+    optional CSMissionUpdateResp            MissionUpdate_Resp              = 48;
+    optional CSGetPowerEnergyActivityResp   GetPowerEnergyActivity_Resp     = 49;
+    optional CSReceivePowerEnergyResp       ReceivePowerEnergy_Resp         = 50;
+    optional CSGetMailResp                  GetMail_Resp                    = 51;
+    optional CSDelMailResp                  DelMail_Resp                    = 52;
+    optional CSNoticeMailReq                NoticeMail_Req                  = 53;
+    optional CSBuyNewbieGiftResp            BuyNewbieGift_Resp              = 54;
+    optional CSRechargeCallbackResp         RechargeCallback_Resp           = 55;
+    optional CSFriendQueryResp              FriendQuery_Resp                = 56;
+    optional CSFriendRequestAddResp         FriendRequestAdd_Resp           = 57;
+    optional CSFriendConfirmAddResp         FriendConfirmAdd_Resp           = 58;
+    optional CSFriendGetInfoResp            FriendGetInfo_Resp              = 59;
+    optional CSFriendRequestRemoveResp      FriendRequestRemove_Resp        = 60;
+    optional CSFriendAddBlackListResp       FriendAddBlackList_Resp         = 61;
+    optional CSFriendRemoveBlackListResp    FriendRemoveBlackList_Resp      = 62;
+    optional CSPvpChatResp                  PvpChat_Resp                    = 63;
+    optional CSUseGiftCodeResp              UseGiftCode_Resp                = 64;
+    optional CSQueryPlayerInfoResp          QueryPlayerInfo_Resp            = 65;
+    optional CSPersonalRoomCreateResp       PersonalRoomCreate_Resp         = 66;
+    optional CSPersonalRoomEnterResp        PersonalRoomEnter_Resp          = 67;
+    optional CSPersonalRoomLeaveResp        PersonalRoomLeave_Resp          = 68;
+    optional CSPersonalRoomKickResp         PersonalRoomKick_Resp           = 69;
+    optional CSPersonalRoomInviteResp       PersonalRoomInvite_Resp         = 70;
+    optional CSPersonalRoomBroadcastResp    PersonalRoomBroadcast_Resp      = 71;
+    optional CSPersonalRoomChatResp         PersonalRoomChat_Resp           = 72;
+    optional CSPersonalRoomModeResp         PersonalRoomMode_Resp           = 73;
+    optional CSPersonalRoomBeginFightResp   PersonalRoomBeginFight_Resp     = 74;
+    optional CSPersonalRoomApplyOrRefuseInviteResp PersonalRoomApplyOrRefuseInvite_Resp = 76;
+    optional CSChangePlayerIconResp         ChangePlayerIcon_Resp           = 77;
+    optional CSPersonalRoomCountDownResp    PersonalRoomCountDown_Resp      = 78;
+    optional CSSyncPlayerDataResp           SyncPlayerData_Resp             = 79;
+    optional CSGetPlayerDataResp            GetPlayerData_Resp              = 80;
+    optional CSPvpAppearCreepResp           AppearCreep_Resp                = 81;
+    optional CSSaveCheckPtDataResp          SaveCheckPtData_Resp            = 82;
+    optional CSGetCheckPtDataResp           GetCheckPtData_Resp             = 83;
+    optional CSSetNewBieResp                SetNewBie_Resp                  = 84;
+    optional CSGetNewBieListResp            GetNewBieList_Resp              = 85;
+    optional CSPropertyUpdateResp           PropertyUpdate_Resp             = 86;
+    optional CSEnterPointResp               EnterPoint_Resp                 = 87;
+    optional CSShopGuideResp                ShopGuide_Resp                  = 88;
+    optional CSActivityListResp             ActivityList_Resp               = 90;
+    optional CSActivityUpdateResp           ActivityUpdate_Resp             = 91;
+    optional CSActivitySubmitResp           ActivitySubmit_Resp             = 92;
+    optional CSSetTitleResp                 SetTitle_Resp                   = 93;
+    optional CSShopBuyResp                  ShopBuy_Resp                    = 94;
+    optional CSKickPlayerReq                KickPlayer_Req                  = 95;
+    optional CSExchangeItemResp             ExchangeItem_Resp               = 96;
+    optional CSActivityCrazyUsageResp       ActivityCrazyUsage_Resp         = 98;
+    optional CSShopListResp                 ShopList_Resp                   = 100;
+    optional CSPvpObserverResp              PvpObserver_Resp                = 101;
+    optional CSSetNewBieOssResp             SetNewBieOss_Resp               = 102;
+    optional CSUpdateAchievementResp        UpdateAchievement_Resp          = 103;
+    optional CSPvpResultResp                PvpResult_Resp                  = 104;
+    optional CSPvpSelfRankListResp          PvpSelfRankList_Resp            = 105;
+
+    optional CSRequestPKeyResp              RequestPKey_Resp                = 114;
+    optional CSSendClientKeyResp            SendClientKey_Resp              = 115;
+
+    optional CSUpdateExchangeListResp       UpdateExchangeList_Resp         = 116;
+
+    optional CSGlyphsRequestInfoResp        GlyphsRequestInfo_Resp          = 120;
+    optional CSGlyphsRequestBasicInfoResp   GlyphsRequestBasicInfo_Resp     = 121;
+    optional CSGlyphsActiveResp             GlyphsActive_Resp               = 122;
+    optional CSGlyphsUpgradeResp            GlyphsUpgrade_Resp              = 123;
+    optional CSBuyVipResp                   BuyVip_Resp                     = 125;
+
+    optional CSGlyphGuideResp               GlyphGuide_Resp                 = 126;
+
+    optional CSNewYearGetInfoResp           NewYearGetInfo_Resp             = 127;
+    optional CSNewYearRewardResp            NewYearReward_Resp              = 128;
+
+    optional CSOpenChestResp                OpenChest_Resp                  = 129;
+    optional CSChristmasDecorateResp        ChristmasDecorate_Resp          = 130;
+    optional CSChristmasTakeBonusResp       ChristmasTakeBonus_Resp         = 131;
+    optional CSChristmasGetDataResp         ChristmasGetDate_Resp           = 132;
+    optional CSChristmasGetRankResp         ChristmasGetRank_Resp           = 133;
+
+    optional CSRetriveCheckPtRewardResp     RetriveCheckPtReward_Resp       = 134;
+    optional CSNewYearCmpResp               NewYearCmp_Resp                 = 136;
+    optional CSNotifyGlyphsUpdateResp       NotifyGlyphsUpdate_Resp         = 137;
+    optional CSPvpRecoverItemResp           RecoverItem_Resp                = 138;
+    optional CSSetSignatureResp             SetSignature_Resp               = 139;
+    optional CSSetExtraInfoVisibleResp      SetExtraInfoVisible_Resp        = 140;
+    optional CSGetExtraInfoResp             GetExtraInfo_Resp               = 141;
+
+    optional CSStopKickPlayerReq            StopKickPlayer_Req              = 142;
+
+    optional CSValentineDataResp            ValentineData_Resp              = 143;
+    optional CSValentineExchangeResp        ValentineExchange_Resp          = 144;
+    optional CSRedPacketsGetInfoResp        RedPacketsGetInfo_Resp          = 145;
+    optional CSRedPacketsGrebResp           RedPacketsGreb_Resp             = 146;
+    optional CSRedPacketsOpenedResp         RedPacketsOpened_Resp           = 147;
+    optional CSChapterUnlockResp            ChapterUnlock_Resp              = 148;
+    optional CSGetChestResp                 GetChest_Resp                   = 149;
+    optional CSPveNotifyResp                PveNotify_Resp                  = 150;
+    optional CSPvpGetAwardResp              PvpGetAward_Resp                = 151;
+
+    optional CSDailyTaskStatusResp          DailyTaskStatus_Resp            = 152;
+    optional CSRequestDailyTaskResp         RequestDailyTask_Resp           = 153;
+    optional CSChangeDailyTaskResp          ChangeDailyTask_Resp            = 154;
+    optional CSOpenDailyTaskAwardResp       OpenDailyTaskAward_Resp         = 155;
+    optional CSUpdateDailyTaskProgressResp  UpdateDailyTaskProgress_Resp    = 156;
+    optional CSNewDailyTaskResp             NewDailyTask_Resp               = 157;
+
+    optional CSPveCheckAwardResp            PveCheckAward_Resp              = 159;
+    optional CSRankWeekRewardInfoResp       RankWeekRewardInfo_Resp         = 160;
+    optional CSRankWeekRewardRewardResp     RankWeekRewardReward_Resp       = 161;
+    optional CSShareRewardGetResq           ShareReward_Resp                = 162;
+    optional CSGetSevenGoalListResp         GetSevenGoalList_Resp           = 163;
+    optional CSRetriveSevenGoalResp         RetriveSevenGoal_Resp           = 164;
+    optional CSNoticeSevenGoalResp          NoticeSevenGoal_Resp            = 165;
+    optional CSPveScoreRankResp             PveScoreRank_Resp               = 166;
+    optional CSTopRankResp                  TopRank_Resp                    = 167;
+    optional CSTopRankTimeResp              TopRankTime_Resp                = 168;
+    optional CSPVPLuckChestInfoResp         PVPLuckChestInfo_Resp           = 169;
+    optional CSPVPLuckChestOpenResp         PVPLuckChestOpen_Resp           = 170;
+    optional CSPVPNormalChestInfoResp       PVPNormalChestInfo_Resp         = 171;
+    optional CSPVPNormalChestOpenResp       PVPNormalChestOpen_Resp         = 172;
+    optional CSPVPNormalChestSlotBuyResp    PVPNormalChestSlotBuy_Resp      = 173;
+    optional CSPVPNormalChestClearTimeResp  PVPNormalChestClearTime_Resp    = 174;
+    optional CSPvpTrapResp                  PvpTrap_Resp                    = 175;
+    optional CSPayGuideBuyResp              PayGuideBuy_Resp                = 176;
+    optional CSPayGuideBuyShieldResp        PayGuideBuyShield_Resp          = 177;
+    optional CSUpdateTaskStatusResp         UpdateTaskStatus_Resp           = 201;
+
+    optional CSAsSyncInfoResp               AsSyncInfo_Resp                 = 202;
+    optional CSAsNewAddResp                 AsNewAdd_Resp                   = 203;
+    optional CSAsOperateResp                AsOperate_Resp                  = 204;
+    optional CSAsUseCardResp                AsUseCard_Resp                  = 205;
+
+    optional CSPvpUseSkillResp              PvpUseSkill_Resp                = 206;
+
+    optional CSInstituteInfoResp            InstituteInfo_Resp              = 208;
+    optional CSInstituteBuyResp             InstituteBuy_Resp               = 209;
+    //optional CSGetAchievementCompResp     GetAchievementComp_Resp         = 210;
+
+    optional CSBuyNopropCountResp           BuyNopropCount_Resp             = 211;
+    optional CSAsUpGradResp         		AsUpGrad_Resp        		    = 212;
+
+    optional CSSkinSyncResp                 SkinSync_Resp                   = 213;
+    optional CSSkinUpDownResp               SkinUpDown_Resp                 = 214;
+    optional CSSkinNewResp                  SkinNew_Resp                    = 215;
+    optional CSSkinBuyResp                  SkinBuy_Resp                    = 216;
+    optional CSSynLimitItemListResp         SynLimitItemList_Resp           = 218;
+    optional CSSkinGuideResp                SkinGuide_Resp                  = 219;
+    optional CSLimitExchangeResp            LimitExchange_Resp              = 220;
+    optional CSSumCallResp                  SumCall_Resp                    = 221;
+    optional CSPvpHostResp                  PvpHost_Resp                    = 222;
+    optional CSBattleGiftResp               BattleGift_Resp                 = 223;
+    optional CSBattleScoreResp              BattleScore_Resp                = 224;
+    optional CSSumRechargeResp              SumRecharge_Resp                = 225;
+    optional CSPvpBattleFailResp           PvpBattleFail_Resp               = 226;
+
+    //运营活动协议
+    optional CSOpActAddResp                 OpActAdd_Resp                   = 300;
+    optional CSOpActStateChangedResp        OpActStateChanged_Resp          = 301;
+    optional CSActSelfDataChangedResp       OpActSelfDataChanged_Resp       = 302;
+    optional CSActGlobalDataChangedResp     OpActGlobalDataChanged_Resp     = 303;
+    optional CSOpActConfigListResp          OpActConfigList_Resp            = 304;
+    optional CSOpActSelfDataListResp        OpActSelfDataList_Resp          = 305;
+    optional CSOpActGlobalDataListResp      OpActGlobalDataList_Resp        = 306;
+    optional CSOpActDemoTakeResp            OpActDemoTake_Resp              = 310;
+    optional CSOpActExchangeResp            OpActExchange_Resp              = 311;
+    optional CSMsgTransactionResp           MsgTransaction_Resp             = 312;
+
+    optional CSPvpHappyItemsResp            PvpHappyItems_Resp              = 313;
+    optional CSPvpHappyUseItemResp          PvpHappyUseItem_Resp            = 314;
+
+    optional CSPaySuccessResp               PaySuccess_Resp                 = 315;
+    optional CSBindOpenidResp               BindOpenid_Resp                 = 316;
+
+#if(VERSION == VERSION_MPLUS)
+    optional CSInviteCodeResp               InviteCode_Resp                 = 800;
+    optional CSFiveStarResp                 FiveStar_Resp                   = 801;
+    optional CSSycFriendListResp            SycFriendList_Resp              = 802;
+    optional CSWatchMovieResp               WatchMovie_Resp                 = 803;
+#endif
+}

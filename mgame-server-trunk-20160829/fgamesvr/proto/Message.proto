@@ -1,0 +1,281 @@
+package fgame;
+option optimize_for = LITE_RUNTIME;
+
+#include "version.h"
+
+enum CS_CMD_ID
+{
+    CS_CMD_REG                      = 100;
+
+    //中心服相关
+    CS_GET_SERVER                   = 200;
+
+    //500+  登陆相关
+    CS_CMD_LOGIN                    = 500;
+    CS_CMD_HEART_BEAT               = 501;
+    CS_CMD_ENTER_SERVER             = 502;
+    CS_CMD_LOGOUT                   = 503;
+    CS_CMD_DIRECT_ENTER             = 504;
+    CS_CMD_CANENTER                 = 505;
+    CS_CMD_QUEUE                    = 506;
+    CS_CMD_CHANGE_NAME              = 507; // 修改名字
+    CS_CMD_GM_COMMAND               = 508; // GM命令
+    CS_CMD_USE_GIFT_CODE            = 510; // 使用礼包码
+    CS_CMD_QUERY_PLAYERINFO         = 511; // 查看玩家信息
+    CS_CMD_CHANGE_PLAYER_ICON       = 512; // 玩家修改头像
+    CS_CMD_SET_NEWBIE               = 513; // 设置新手标识(网络版使用)
+    CS_CMD_GET_NEWBIE_LIST          = 514; // 获取新手引导list
+    CS_CMD_SHOP_GUIDE               = 515; // 新手商城引导
+    CS_CMD_SET_TITLE                = 517;
+    CS_CMD_SHOP_BUY                 = 518;
+    CS_CMD_KICK_PLAYER              = 519; //同一账号玩家踢号处理
+    CS_CMD_STOP_KICK_PLAYLER        = 520; //停服踢号协议
+
+    CS_CMD_REQUEST_PKEY             = 550; // 请求公钥
+    CS_CMD_SEND_CLIENT_KEY          = 551; // 客户端发送AES私钥给服务器
+
+    //关卡操作
+    CS_CMD_ENTER_POINT              = 604;    // 进入PVE关卡
+
+    // 数据同步
+    CS_CMD_RECHARGE_CALLBACK        = 704; // 联网充值callback通知前端
+    CS_CMD_SYC_PLAYERINFO           = 801; //玩家信息同步
+    
+    CS_CMD_MSG_TRANSACTION          = 811; //消息事务操作，一次性处理多条协议
+
+    // 精灵系统
+    CS_CMD_AS_SYNC_INFO 			= 1000; // 同步精灵数据
+    CS_CMD_AS_NEW_ADD   			= 1001; // 新增精灵
+    CS_CMD_AS_OPERATE   			= 1002; // 装备/卸下精灵; 进阶 升级
+    CS_CMD_AS_USE_CARD  			= 1003; // 使用精灵体验卡
+    CS_CMD_AS_UPGRAD    			= 1004; // 将军升级
+
+    //Pvp相关
+    CS_CMD_PVP_MATCH                = 2000; // 请求pvp匹配
+    CS_CMD_PVP_START                = 2001; // pvp开始
+    CS_CMD_PVP_FIGHT                = 2002; // 出兵
+    CS_CMD_PVP_UPGRADE              = 2003; // 建筑升级
+    CS_CMD_PVP_END                  = 2004; // pvp结算
+    CS_CMD_PVP_MAP                  = 2005; // 同步地图数据
+    CS_CMD_PVP_PING                 = 2006; // ping【pvp心跳】
+    CS_CMD_PVP_LEAVE                = 2007; // 离开房间
+    CS_CMD_PVP_USE_ITEM             = 2008; // 使用道具
+    CS_CMD_PVP_STOP_MATCH           = 2009; // 停止匹配
+    CS_CMD_PVP_APPEAR_CREEP         = 2010; // 怪物出现 （客户端上报）
+    CS_CMD_PVP_OBSERVER             = 2011; // 观战
+    CS_CMD_PVP_RECOVER_ITEM         = 2012; // 恢复道具CD时间
+    CS_CMD_PVP_USE_AS_SKILL         = 2013; // 使用精灵技能
+    CS_CMD_PVP_TRAP                 = 2015; // 陷阱消息
+    CS_CMD_PVP_HOST                 = 2016; // pvp选择主机
+    
+    CS_CMD_PVP_HAPPY_ITEMS          = 2030; //欢乐道具场获取道具
+    CS_CMD_PVP_HAPPY_USE_ITEM       = 2031; //欢乐道具场使用道具
+
+    CS_CMD_PVP_RANKING_LIST         = 2100; // pvp排行榜列表
+    CS_CMD_PVP_RANKING_INFO         = 2101; // 个人排行信息
+    CS_CMD_PVP_RESULT               = 2102; // 最近几场的战斗列表
+    CS_CMD_PVP_SELF_RANKLIST        = 2103; // 个人排行榜的前后10名
+    CS_CMD_PVP_CHAT                 = 2200; // pvp房间内聊天
+    CS_CMD_PVP_GET_AWARD            = 2201; // PVP无道具场获得宝箱奖励
+
+    //------------ 玩家相关----------------------
+    //道具相关
+    CS_CMD_BUY_ITEM                 = 3000;
+    CS_CMD_USE_ITEM                 = 3001;
+    CS_CMD_SHOP_LIST                = 3002; //商城列表
+    // 荣誉点兑换
+    CS_CMD_EXCHANGE_ITEM            = 3003; // 兑换荣誉物品
+    CS_CMD_UPDATE_EXCHANGE_LIST     = 3004; // 刷新荣誉商店
+
+    CS_CMD_BUY_VIP                  = 3005; //vip
+    CS_CMD_OPEN_CHEST               = 3006; //开宝箱
+    CS_CMD_VIP_TIME                 = 3007; //vip时间请求
+
+    CS_CMD_BUY_NOPROP_COUNT         = 3008; //购买无道具场次数
+
+    CS_CMD_SET_SIGNATURE            = 3010; //设置个性签名
+    CS_CMD_SET_EXTRAINFO_VISIBLE    = 3011; //设置额外信息的可见性
+    CS_CMD_GET_EXTRAINFO            = 3012; //获取额外信息
+    CS_CMD_ITEM_LIMIT               = 3013; //道具购买每日限量列表
+
+    //美食研究院
+    CS_CMD_INSTITUTE_INFO           = 3020;
+    CS_CMD_INSTITUTE_BUY            = 3021;
+
+    // 属性相关
+    CS_CMD_PROPERTY_UPDATE          = 3101; // 属性同步(联机版-服务器发送)
+    CS_CMD_SET_NEWBIE_OSS           = 3102; // 新手引导设置oss用
+
+    //前端支付成功通知服务器校验
+    CS_CMD_PAY_SUCCESS              = 3103;
+
+    //绑定新的openid
+    CS_CMD_BIND_OPENID              = 3104;
+
+    //成就相关
+    CS_CMD_GET_ACHIEVEMENT          = 4001;
+    CS_CMD_RECEIVE_ACHIEVEMENT      = 4002;
+    CS_CMD_RECEIVE_ACHIEVEMENT_REWARD = 4003;
+    CS_CMD_UPDATE_ACHIEVEMENT       = 4004; //成就更新
+    CS_CMD_GET_ACHIEVEMENT_COMP     = 4005; //获取全服完成情况
+
+    CS_CMD_STREAK_WIN_VALUE         = 5001;  //连胜场次
+    CS_CMD_STREAK_WIN_GET           = 5002;  //领取
+    CS_CMD_SHARE_REWARD_GET         = 5003;  //分享奖励
+
+    CS_CMD_PVP_LUCK_CHEST_INFO      = 5101;// 竞技场幸运宝箱查询
+    CS_CMD_PVP_LUCK_CHEST_OPEN      = 5102;//  竞技场幸运宝箱开启
+    CS_CMD_PVP_NORMAL_CHEST_INFO    = 5103;// 竞技场宝箱查询
+    CS_CMD_PVP_NORMAL_CHEST_OPEN    = 5104;//  竞技场宝箱开启
+    CS_CMD_PVP_BUY_CHEST_SLOT       = 5105;//  购买竞技场宝箱插槽
+    CS_CMD_PVP_CLEAR_CHEST_TIME     = 5106;//  清除竞技场宝箱CD
+
+    CS_CMD_PAY_GUIDE_BUY             = 5110; // 付费引导购买
+    CS_CMD_PAY_GUIDE_BUY_SHIELD     = 5111; // 付费引导护盾购买
+
+    // 时装协议
+    CS_CMD_SKIN_SYNC                = 5200; //同步时装列表
+    CS_CMD_SKIN_UP_DOWN             = 5201; //时装装备卸下
+    CS_CMD_SKIN_NEW                 = 5202; //获得新的时装
+    CS_CMD_SKIN_BUY                 = 5203; //时装加过期时间
+    CS_CMD_SKIN_GUIDE               = 5204; //时装引导协议
+
+    CS_CMD_NOTICE   				= 6001;
+    CS_CMD_GET_MAIL 				= 6002;
+    CS_CMD_DEL_MAIL 				= 6003;
+    CS_CMD_NOTICE_MAIL 				= 6004;
+
+    CS_CMD_OP_ACT_ADD               = 7000; //运营活动增加
+    CS_CMD_OP_ACT_STATE_CHANGED     = 7001; //运营活动状态改变
+    CS_CMD_ACT_SELF_DATA_CHANGED    = 7002; //运营活动增加
+    CS_CMD_ACT_GLOBAL_DATA_CHANGED  = 7003; //运营活动状态改变
+    CS_CMD_OP_ACT_CONFIG_LIST       = 7004;//请求活动配置列表
+    CS_CMD_OP_ACT_SELF_DATA_LIST    = 7005;//请求个人活动数据列表
+    CS_CMD_OP_ACT_GLOBAL_DATA_LIST  = 7006;//请求全局活动数据列表
+
+    //运营活动协议ID规范 每个活动预留10个协议 从7100开始 比如demo 7100-7109 | exchange 7110-7119
+    //如果这个活动开始就超过10个 则预留20个协议 依次类推
+
+    //运营活动——DEMO
+    CS_CMD_OP_ACT_DEMO_TAKE         = 7100; //运营活动DEMO领取协
+    //运营活动——兑换活动
+    CS_CMD_OP_ACT_EXCHANGE          = 7110; //运营活动兑换协议
+
+    // 7日签到
+    CS_CMD_SEVEN_DAY_SIGN_LIST      = 8001; // 获取签到列表
+    CS_CMD_SEVEN_DAY_SIGN           = 8002; // 签到
+
+    //充值活动相关
+    CS_CMD_GET_OPEN_ACTIVITY        = 8100; //获取所有开启的活动
+    CS_CMD_GET_ACTIVITY_DATA        = 8101; //获取充值活动信息
+    CS_CMD_RECEIVE_ACTIVITY_REWARD  = 8102; //领取充值活动奖励
+    CS_CMD_GET_POWER_ENERGY_ACTIVITY_DATA = 8103; //体力精力大放送活动信息
+    CS_CMD_RECEIVE_POWER_ENERGY_REWARD = 8104; //领取体力精力大放送活动信息
+    CS_CMD_BUY_NEWBIE_GIFT          = 8105; //购买新手礼包
+    CS_CMD_GET_ACTIVITY_CRAZY_DETAIL= 8106; //获取狂欢活动详情
+    CS_CMD_ACTIVITY_CRAZY_USAGE     = 8107; //领取狂欢活动礼包
+    CS_CMD_ACTIVITY_CRAZY_USABLE    = 8108; //狂欢活动可领取
+    CS_CMD_SUM_RECHARGE             = 8109; //领取累积充值奖励
+
+    //圣诞活动
+    CS_CMD_CHRISTMAS_DECORATE_TREE  = 8110; // 装扮圣诞树
+    CS_CMD_CHRISTMAS_TAKE_BONUS     = 8111; // 领取圣诞树奖励
+    CS_CMD_CHRISTMAS_GET_DATA       = 8112; // 获取圣诞活动数据
+    CS_CMD_CHRISTMAS_GET_RANK       = 8113; // 获取圣诞活动排行榜
+
+    //情人节活动
+    CS_CMD_VALENTINE_GET_DATA       = 8114; //获取情人节活动数据
+    CS_CMD_VALENTINE_EXCHANGE       = 8115; //礼盒兑换
+
+    //七日目标系统
+    CS_CMD_GET_SEVENDAY_GOAL_LIST   = 8116;
+    CS_CMD_NOTICE_SEVENDAY_GOAL     = 8117;
+    CS_CMD_RETRIVE_SEVENDAY_GOAL    = 8118;
+
+    // 付费活动
+    CS_CMD_LIMIT_EXCHANGE           = 8120;
+    CS_CMD_SUM_CALL                 = 8121;
+
+    //每日必做
+    CS_CMD_MISSION_LIST             = 8201; //任务列表
+    CS_CMD_MISSION_UPDATE           = 8202; //任务更新
+    CS_CMD_MISSION_COMPLETE         = 8203; //任务完成
+
+    CS_CMD_ACTIVITY_LIST            = 8210;   //活动列表
+    CS_CMD_ACTIVITY_UPDATE          = 8211;   //活动更新
+    CS_CMD_ACTIVITY_SUBMIT          = 8212;   //提交活动
+
+    CS_CMD_BATTLE_GIFT              = 8213;   //勇者之心，战斗狂人领取奖励
+    CS_CMD_BATTLE_SCORE             = 8214;   //王者之路荣誉领取
+
+    // 元旦活动
+    CS_CMD_NEWYEAR_GET_INFO         = 8223;
+    CS_CMD_NEWYEAR_REWARD           = 8224;
+    CS_CMD_NEWYEAR_CMP              = 8225; //可以领取奖励通知
+
+    //抢红包活动
+    CS_CMD_RED_PACKETS_GET_INFO     = 8231;
+    CS_CMD_RED_PACKETS_GREB         = 8232;
+    CS_CMD_RED_PACKETS_OPENED       = 8233;
+
+    CS_CMD_RANK_WEEK_REWARD_INFO    = 8241;
+    CS_CMD_RANK_WEEK_REWARD_REWARD  = 8242;
+
+    // 每日任务
+    CS_CMD_DAILY_TASK_STATUS        = 8250; // 本次登录是否显示每日任务
+    CS_CMD_REQUEST_DAILY_TASK       = 8251; // 获取当前的每日任务列表
+    CS_CMD_CHANGE_DAILY_TASK        = 8252; // 切换任务
+    CS_CMD_OPEN_DAILY_TASK_AWARD    = 8253; // 打开每日任务奖励
+    CS_CMD_UPDATE_DAILY_TASK_PROGRESS = 8254; // 更新每日任务进度
+    CS_CMD_NEW_DAILY_TASK           = 8255; // 有新一天的每日任务通知
+    CS_CMD_UPDATE_TASK_STATUS       = 8256; // 单项任务的开启状态变化通知
+    //好友
+    CS_CMD_FRIEND_QUERY             = 8301; //根据UNI查询信息
+    CS_CMD_FRIEND_REQUEST_ADD       = 8302; //请求加好友
+    CS_CMD_FRIEND_CONFIRM_ADD       = 8303; //加好友应答
+    CS_CMD_FRIEND_GET_INFO          = 8304; //获取好友信息（包括好友列表、请求加好友信息）
+    CS_CMD_FRIEND_REQUEST_REMOVE    = 8305; //删除好友
+    CS_CMD_FRIEND_ADD_BLACK_LIST    = 8306; //加黑名单
+    CS_CMD_FRIEND_REMOVE_BLACK_LIST = 8307; //移除黑名单
+
+    //个人房间pvp
+    CS_CMD_PERSONAL_ROOM_CREATE     = 8401; //创建个人房间
+    CS_CMD_PERSONAL_ROOM_ENTER      = 8402; //进入个人房间
+    CS_CMD_PERSONAL_ROOM_LEAVE      = 8403; //离开个人房间
+    CS_CMD_PERSONAL_ROOM_KICK       = 8404; //踢人
+    CS_CMD_PERSONAL_ROOM_INVITE     = 8405; //邀请好友
+    CS_CMD_PERSONAL_ROOM_BROADCAST  = 8406; //挑战全服
+    CS_CMD_PERSONAL_ROOM_CHAT       = 8407; //聊天
+    CS_CMD_PERSONAL_ROOM_MODE       = 8408; //改变房间模式
+    CS_CMD_PERSONAL_ROOM_BEGIN_FIGHT= 8409; //开战
+    CS_CMD_PERSONAL_ROOM_APPLY_OR_REFUSE_INVITE = 8410; //接受或拒绝约战
+    CS_CMD_PERSONAL_ROOM_COUNT_DOWN = 8411; //倒计时开始
+
+    //pve相关
+    CS_CMD_PVE_CHECK_POINT_SAVE     = 8501; //设置关卡ID
+    CS_CMD_PVE_CHECK_POINT_LIST     = 8502; //请求关卡list
+    CS_CMD_PVE_CHAPTER_UNLOCK       = 8504; // 关卡章节解锁
+    CS_CMD_PVE_GET_CHEST            = 8505; // 宝箱领取
+    CS_CMD_PVE_NOTIFY               = 8506; // pve通知
+    CS_CMD_PVE_CHECK_AWARD          = 8507; // 检查新手训练营奖励
+    CS_CMD_PVE_RANK                 = 8508; // pve排名
+    CS_CMD_TOP_RANK                 = 8509; //协议是巅峰排行活动里面的排行(pve星星排行，pvp胜场排名，pvp连胜排名)
+    CS_CMD_TOP_RANK_TIME            = 8510; //巅峰排行活动各排行的时间
+
+    // 厨艺
+    CS_CMD_GLYPHS_REQUEST_INFO      = 8700; // 请求厨艺数据
+    CS_CMD_GLYPHS_REQUEST_BASIC_INFO= 8701; // 请求厨艺材料数据
+    CS_CMD_GLYPHS_ACTIVE            = 8702; // 激活厨艺
+    CS_CMD_GLYPHS_UPGRADE           = 8703; // 升级厨艺
+    CS_CMD_GLYPH_GUIDE_ADDSTUFF     = 8705; // 请求新手引导添加材料
+    CS_CMD_GLYPHS_UPDATE            = 8706; // 厨艺状态改变后, 服务器推送通知
+    
+#if(VERSION == VERSION_MPLUS)
+    //mplus
+    CS_CMD_SYC_FRIEND_LIST          = 8308; //同步平台好友
+    CS_CMD_INVITE_CODE              = 9901;// 邀请码
+    CS_CMD_FIVE_STAR                = 9902;
+    CS_CMD_WATCH_MOVIE              = 9903; //观看影片领奖励
+#endif
+}
+

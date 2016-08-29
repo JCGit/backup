@@ -1,0 +1,89 @@
+body{
+	margin-top: 162px;
+	margin-left: 50px;
+}
+
+.content {
+	width: 100%;
+	min-width: 1024px;
+	margin: 50px auto;
+	overflow-y: hidden;
+}
+
+.left, .right{
+	float: left;
+}
+
+.left li{
+	width: 150px;
+	height: 30px;
+	line-height: 30px;
+	border: 1px solid #000;
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+
+.left li.current{
+	background-color: #d1d1d1;
+}
+
+.right table{
+	display: none;
+	margin-left: 20px;
+	min-width: 400px;
+}
+
+.right table td, .right table th{
+	border: 1px solid #000;
+	padding: 10px;
+}
+
+.right ul{
+	display: inline-block;
+	float: left;
+}
+
+.right li{
+	border: 1px solid #000;
+	margin-bottom: 10px;
+	padding: 0 20px; 
+	height: 30px;
+	line-height: 30px;
+	cursor: pointer;
+}
+
+.right li.current{
+	background-color: #dedede;
+}
+
+.right li span{
+	display: inline-block;
+	margin-left: 15px;
+	border-left: 1px solid #000;
+	padding-left: 10px;
+}
+
+.right li span:nth-child(1){
+	border-left: 0;
+	margin-left: 0;
+}
+
+.cont-box {
+	padding: 10px;
+    overflow: hidden;
+    float: left;
+    border: 1px solid #000;
+    margin-left: 20px;
+    padding-top: 0;
+}
+
+.cont-box p.title{
+	text-align: center;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #000;
+	line-height: 30px;
+}
+
+.change{
+	margin-left: 10px;
+}

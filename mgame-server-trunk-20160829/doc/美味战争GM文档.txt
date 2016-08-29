@@ -1,0 +1,140 @@
+
+============
+美味战争GM文档
+============
+
+热更新配置文件
+1. 更新游戏服目录下的配置文件
+2. 访问中心服的地址： http://中心服地址:7602/management 接口，中心服会通知各个
+游戏服重新加载配置
+
+通过发送HTTP请求的方式来发送GM命令
+ip:服务器ip(调试用10.10.2.58)
+port:7602
+POST: 
+http://10.10.2.58:7602/gm/
+Body:
+gmtype=[addpower|adddiamond|sendnotice|queryinfo] #### 后面有需求再增加
+
+增加体力
+gmtype=addpower&uin=[%d]&value=[%d]
+	gmtype	--addpower
+	uin		--玩家ID
+	value	--数值
+返回 true/false
+要求:玩家在线 因为体力以前端为准
+
+增加钻石
+gmtype=adddiamond&uin=[%d]&value=[%d]
+	gmtype	--adddiamond
+	uin		--玩家ID
+	value	--数值
+返回 true/false
+
+发送公告
+gmtype=sendnotice&times=[%d]&interval_time=[%d]&ntype=[%d]&nserious=[%d]&scon=[%s]&stitle=[%s]&ncount=[%d]&ngap=[%d]
+    times, 			--公告发送次数
+    interval_time, 	-- 公告发送间隔时间1/100s
+    ntype, 			--公告类型 1 跑马灯 2 公告
+    nserious,		--紧急程度 0 普通 1 紧急 2 强制
+    scon, 			-- 内容
+    stitle,			--标题
+    ncount,			--客户端显示次数
+    ngap 			-- 公告显示间隔时间
+返回 true/false
+
+查询玩家信息
+gmtype=queryinfo&uin=[%d]
+	uin		-- 玩家ID
+返回 正确：玩家数据【json格式】
+	错误： false 或者 uin : [%d] is not exist
+
+禁言
+gmtype=forbidspeak&uin=[%d]&speaktime=[%d]
+	uin			-- 玩家ID
+	speaktime	-- 能说话的时间【时间戳】
+
+封号
+gmtype=forbidlogin&uin=[%d]&logintime=[%d]
+	uin			-- 玩家ID
+	logintime	-- 能登录时间【时间戳】
+
+邮件
+gmtype=sendmail&uin=[%d]&type=[%d]&title=[%s]&content=[%s]&plugin=[%s]
+	uin			-- 玩家ID
+    type		-- 邮件类型 0：单点， 1：全服
+    title		-- 邮件名
+    content     -- 邮件内容
+    plugin      -- 插件类容 {20001:1, 20002:2, 20003:3} 一个逗号表示一个类型以及数量， 最多发四种奖励
+
+添加运营活动
+gmtype=addactivity&data=([%d]+)
+    data json数据
+    基础数据：
+        id          活动ID【活动管理后台保证唯一性 10000开始】
+        name        活动名称
+        desc        活动规则描述
+        type        活动类型
+                    OPERATE_ACTIVITY_DEMO = 1000, -- 运营活动DEMO
+
+        startTime   开始时间【时间戳】
+        endTime     结束时间【时间戳】
+        icon        活动图标【str】
+        state       给默认值1 -- 添加未启用【详细值见setactivitystate】
+    额外数据：【不同类型活动数据格式不一样 详见下面】
+
+
+设置运营活动状态
+gmtype=setactivitystate&activityId=([%d]+)&state=([%d]+)
+    activityId 活动ID【已添加过且未删除未到期的活动ID】
+    state 活动状态 取值如下：
+    1 添加不启用【活动只是经过了数据测试 并没有启用 玩家不能参与】
+    2 添加已启用【活动已启用 活动到startTime才可见】
+    3 可见【设置后客户端就可见 这个状态只是让玩家看 等到startTime才可以参与】
+    ---- 以上状态可以设置 状态不允许回退 --
+    4 运行【玩家可以参与活动 数据收集阶段】
+    5 过期【活动过期后 活动及其数据都会删除掉】
+
+删除运营活动
+gmtype=delactivity&activityId=([%d]+)
+    activityId  活动ID【已添加过且未删除未到期的活动ID】
+
+#加物品#
+包括可加：砖石，体力， 精力，荣誉
+gmtype=additem&uin=([%d]+)&id=([%d]+)&count=([%d]+)
+特殊id说明：
+砖石：20001
+体力：20002
+精力：20003
+荣誉：20004
+
+#加vip#
+gmtype=vip&uin=([%d]+)&level=([%d]+)&day=([%d]+)
+
+#删除cdk
+gmtype=delcdk&data=(*)
+data 是一个json字符串，序列多个cdk的数组
+
+
+## 设置pvp随机匹配分差值
+gmtype=pvp_rand_diff_point&value=600
+
+example:
+http://10.10.2.39:7602/gm?gmtype=pvp_rand_diff_point&value=600
+
+## 设置pvp无道具场匹配分差值
+gmtype=pvp_fair_diff_point&value=600
+
+example:
+http://10.10.2.39:7602/gm?gmtype=pvp_fair_diff_point&value=600
+
+
+## 设置开房地图id
+gmtype=pvp_map_id&value=10201
+
+example:
+http://10.10.2.39:7602/gm?gmtype=pvp_map_id&value=10201
+
+示例：
+http://10.10.2.58:7602/gm?
+

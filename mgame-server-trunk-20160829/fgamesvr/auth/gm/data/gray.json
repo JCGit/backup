@@ -1,0 +1,13 @@
+{
+    "base": 2000,
+    "gray_list": {
+        "PCOS-12072610462": 1,
+        "Denny4": 1
+    },
+    "gray_region": [
+        "100-200",
+        "300-400"
+    ],
+    "gameserver": "gamed2",
+    "gray_release_flag": false
+}

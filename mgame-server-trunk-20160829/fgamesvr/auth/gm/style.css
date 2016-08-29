@@ -1,0 +1,13 @@
+<style type="text/css">
+div#container{width:1000px}
+div#header {background-color:#99bbbb;}
+div#menu {background-color:#ffff99;height:500px;width:150px;float:left;}
+div#content {background-color:#EEEEEE;height:500px;width:450px;float:left;}
+div#footer {background-color:#99bbbb;clear:both;text-align:center;}
+h1 {margin-bottom:0;}
+h2 {margin-bottom:0;font-size:15px;}
+ul {margin:0;}
+li {list-style:none;}
+
+</style>
+

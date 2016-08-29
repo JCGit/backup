@@ -1,0 +1,396 @@
+package fgame;
+option optimize_for = LITE_RUNTIME;
+
+import "Base.proto";
+import "Player.proto";
+
+//pvp相关
+message CSPvpMatchReq{
+    required uint32 Type = 1; //如果想固定人数 就传人数 2,3,4 不固定传0
+    optional uint32 Mode = 2; //1 随机匹配 2 固定开房 3 无道具场
+}
+
+message CSPropData{
+    required int32 ItemId   = 1; //物品ID
+    required int32 Count    = 2; //数量
+}
+
+message AsInfo {
+    required uint32 AssistantId     = 1; // 精灵类型ID
+    required uint32 Level           = 2;
+    required uint32 Quality         = 3;
+    repeated uint32 ActiveSkills    = 4; // 主动技能
+    repeated uint32 PassiveSkills   = 5; // 被动技能
+    repeated uint32 SlotIndex = 6; //槽位
+}
+
+message PvpGlyphData {
+    required int32  glyphID    = 1; // 厨艺的标志
+    required int32  mainData   = 2; // 厨艺的主属性
+    required int32  sideData   = 3; // 厨艺的副属性
+    required int32  soul       = 4; // 厨艺的火候
+    required string buildLevel = 5; // 厨艺的建筑等级
+    required int32  glyphLevel = 6; // 厨艺等级
+}
+
+message CSPlayInfo{
+    required int64 Uin              = 1;
+    required string Name            = 2;
+    required uint32 Camp            = 3; //阵营
+    required string Icon            = 4; //头像
+    required uint32 Point           = 5; //积分
+    repeated CSPropData PropData    = 6; //道具数据
+    repeated PvpGlyphData GlyphsInfo= 7; //符文信息
+    repeated AsInfo AsInfo          = 8; //将军信息
+    required uint32 SkinId          = 9; //时装id
+    optional uint32 PlayerAI        = 10; //Ai等级
+}
+
+message CSPvpMatchResp{
+    required uint32 Type            = 1; //房间人数 【2人地图 3人地图 4人地图】
+    optional uint32 Flag            = 2; //房间模式 【1 随机匹配 2 固定开房 3 随机匹配】
+    optional uint32 RoomId          = 3; //房间号
+    optional uint32 Opener          = 4; //房主uin【开房才有意义】
+    optional uint32 MapId           = 5; //地图ID
+    repeated CSPlayInfo PlayInfo    = 6; //玩家信息【基本信息 阵营 道具 符文 时装 将军 等】
+}
+
+message CSPvpStopMatchReq{
+    required uint32 Type = 1; //如果想固定人数 就传人数 2,4 不固定传0
+    optional uint32 Mode = 2; //1 随机匹配 2 固定开房 3 无道具场
+}
+
+message CSPvpStopMatchResp{
+}
+
+message CSPvpAppearCreepReq{
+    required uint32 CreepId = 1;
+    required double Ts      = 2;
+    required uint32 DataId  = 3;
+    optional uint32 RoomId  = 4;
+    optional uint32 MsgNo   = 5;
+    //消息号 每局重新开始记 每次发送房间消息 消息号加1
+}
+
+message CSPvpAppearCreepResp{
+    required uint32 CreepId = 1;
+    required double Ts      = 2;
+    required uint32 DataId  = 3;
+}
+
+//玩家进入观战模式
+message CSPvpObserverReq{
+    optional uint32 RoomId  = 1;
+    optional uint32 MsgNo   = 2;
+    optional int64  Uin     = 3; //观战者Uin
+}
+
+message CSPvpObserverResp{
+    optional int64 Uin = 1;
+}
+
+message CSPvpStartReq{
+    required uint32 Type = 1;
+    optional uint32 RoomId = 2;
+    optional uint32 MsgNo = 3; //这个消息号应该是客户端房间内的第一条消息
+}
+
+message CSPvpStartResp{
+    required double Ts              = 1;
+}
+
+message CSPvpFightReq{
+    required int64 Uin     = 1;
+    required uint32 Src     = 2;
+    required uint32 Dest    = 3;
+    required uint32 Num     = 4;
+    required double  Ts      = 5;
+    required uint32 FormationId = 6; //改成全局唯一的id
+    optional uint32 RoomId  = 7;
+    optional uint32 MsgNo   = 8;
+    optional int32  IgnoreFlag = 9; //忽略某些锁标示
+}
+
+message CSPvpFightResp{
+    required int64 Uin     = 1;
+    required uint32 Src     = 2;    //起点建筑id
+    required uint32 Dest    = 3;    //终点建筑id
+    required uint32 Num     = 4;    //出兵数量
+    required double  Ts      = 5;    //时间差
+    required uint32 FormationId = 6;
+}
+
+message CSPvpUpgradeReq{
+    required int64 Uin     = 1;
+    required uint32 BuildId = 2;
+    required double  Ts      = 3;
+    optional uint32 Level   = 4;
+    optional uint32 RoomId  = 5;
+    optional uint32 MsgNo   = 6;
+
+}
+
+message CSPvpUpgradeResp{
+    required int64 Uin     = 1;
+    required uint32 BuildId = 2;
+    required double  Ts      = 3;
+    optional uint32 Level   = 4;
+}
+
+message CSPvpEndReq{
+    required int64 Win     = 1;    //胜利者id
+    required double  Ts     = 2;
+    optional uint32 RoomId  = 3;
+    optional uint32 MsgNo   = 4;
+
+}
+
+message CSPlayerPvpResult{
+    required int64 Uin          = 1;
+    required string Name        = 2;
+    required uint32 PrevScore   = 3; //打之前的荣誉
+    required uint32 AddScore    = 4; //增加的荣誉
+    required int32 WinRate      = 5; //打之后的胜率
+    optional uint32 Title       = 6; //称号
+    optional uint32 NewRank     = 7; //新的排名
+    optional uint32 WinCount    = 8; //连胜场次
+    optional int32 PrevPoint   = 9; //打之前的积分
+    optional int32 AddPoint    = 10;//增加的积分
+    optional uint32 ExtraScore = 11; //狂欢活动额外新增荣誉
+    optional uint32 VipLevel = 12;   // 1.白银 2.黄金 3.钻石
+    optional uint32 ShieldStatus = 13;   // 1.有 2.破裂 3.无
+    optional uint32 StreakWin = 14; //胜者获得连胜荣誉
+    optional uint32 EndWin = 15; //胜者终结别人的连胜获得荣誉
+    optional uint32 AddExp = 16; //pvp结算经验
+}
+
+message CSPvpEndResp{
+    required int64 Win                  = 1; //胜利者id 如果是0 则表示平局
+    required double  Ts                 = 2;
+    repeated CSPlayerPvpResult Result   = 3; // 玩家PVP结果信息列表
+    repeated PropertyUpdateData UpdateData = 4;
+    optional uint32 ShareId             = 5;
+    optional uint32 PvpChestId          = 6;
+    optional uint32 PvpChestType        = 7;
+    optional uint32 PayItemId           = 8; //付费引导id
+    optional uint32 PayItemCount        = 9; //付费引导count
+}
+
+message CSPvpLeaveReq{
+    optional uint32 RoomId  = 1;
+    optional uint32 MsgNo   = 2;
+    optional uint32 Mode    = 3; // 离开模式 1 开局2分钟内离开 2 开局2分钟后离开或者已被打败离开
+}
+
+message CSPvpLeaveResp{
+    required int64 Uin     = 1;    //中途短线离开房间的玩家id
+}
+
+message CSPvpGetAwardResp {
+    required int32 AwardType = 1; // 奖励类型 0:无； 1:正常结束奖励 2:提前结束奖励
+    repeated PropertyUpdateData UpdateData = 2;
+}
+
+message CSFormationList{
+    required uint32 id  = 1;    //客户端阵型ID
+}
+
+message CSMapData{
+    required uint32 BuildId = 1;    //建筑id
+    required uint32 Type    = 2;    //类型
+    required uint32 Level   = 3;    //等级
+    required uint32 Camp    = 4;    //占领放id
+    required uint32 Num     = 5;    //兵力
+    repeated CSFormationList List = 6;
+}
+
+message CSPvpMapReq{
+    repeated CSMapData Data = 1;
+    required double Ts       = 2;
+    optional uint32 RoomId  = 3;
+    optional uint32 MsgNo   = 4;
+}
+
+message CSPvpMapResp{
+    repeated CSMapData Data = 1;
+    required double Ts       = 2;
+}
+
+message CSPvpPingReq{
+    required double Ts       = 1; //准备开始后连续发送ping协议 每隔1秒发送一次
+    optional uint32 RoomId  = 2;
+    optional uint32 MsgNo   = 3;
+}
+
+message CSPvpPingResp{
+    required double  Ts      = 1; //房间开始到ping发送时间
+}
+
+message CSPvpHostReq{
+}
+
+message CSPvpHostResp{
+    required int64 Uin = 1; //主机uin
+    optional double Ts = 2;
+    //主机ID 客户端要判断
+    //如果是自己 后面就要上传Map数据和AI动作
+    //如果不是自己 后面就要根据主机的Map数据来修正自己的数据
+    //pvp过程中间有人断线也会发送该消息
+}
+
+message CSPvpUseItemReq{
+    required int32 ItemId   = 1;
+    required double Ts      = 2;
+    optional uint32 X       = 3;
+    optional uint32 Y       = 4;
+    optional uint32 BuildId = 5;
+    optional uint32 RoomId  = 6;
+    optional uint32 MsgNo   = 7;
+}
+
+message CSPvpUseItemResp{
+    required int64 Uin     = 1;
+    required int32 ItemId    = 2;
+    required double Ts      = 3;
+    optional uint32 X       = 4;
+    optional uint32 Y       = 5;
+    optional uint32 BuildId = 6;
+}
+
+// PVP使用精灵技能
+// 校验对应阵营是否拥有此技能
+// 校验CD时间 可选
+message CSPvpUseSkillReq {
+    required uint32 CampID  = 1; // 阵营编号 1-4
+    required uint32 AsstID = 2; // 技能编号
+    required string SkillJson = 3; //技能数据
+}
+
+// 转发给全房间
+message CSPvpUseSkillResp {
+    required bool   Ok            = 1;
+    required uint32 CampID        = 2; // 阵营编号 1-4
+    required uint32 AsstID        = 3; // 精灵编号
+    required string SkillJson     = 4; // 技能数据
+}
+
+// PVP排行榜
+message CSPvpRankingGetListReq{
+    required uint32 GroundID = 1; // 组别ID[1, 2, 3, 4]
+    optional uint32 TopNSize = 2; // 前N名的大小的请求[n=50]
+}
+
+message CSPvpRankingPlayerInfo{
+    required uint32 Order   = 1;    // 排名
+    required uint64 Id      = 2;    // 玩家ID
+    optional string Name    = 3;    // 玩家名字
+    optional uint32 Point   = 4;    // 玩家积分
+    optional float WinRate  = 5;    // 玩家胜率
+    optional uint32 Group   = 6;    //组别
+    optional uint32 Score   = 7;    //荣誉
+    optional uint32 VipLevel = 8;   // 1.白银 2.黄金 3.钻石
+    optional uint32 Area  = 9;  //地区
+    optional uint32 StreakWin = 10; //连胜次数
+}
+
+message CSPvpRankingGetListResp{
+    required uint32 GroundID = 1; // 组别的ID[请求的组别]
+    repeated CSPvpRankingPlayerInfo PlayerList = 2; // 玩家基本信息列表
+}
+
+message CSPvpRankingPlayerInfoReq{
+    required uint64 Uin = 1;
+}
+
+message CSPvpRankingPlayerInfoResp{
+    required CSPvpRankingPlayerInfo RankInfo    = 1;
+    optional uint32 TotalRound                  = 2; //总场次
+}
+
+message CSPvpResultReq{
+}
+
+message CSPvpResultResp{
+    repeated CSPvpEndResp Result = 1;
+}
+
+message CSPvpSelfRankListReq{
+}
+
+message CSPvpSelfRankListResp{
+    repeated CSPvpRankingPlayerInfo PlayerList = 1;
+}
+
+message CSPvpChatReq{
+    required uint32 Channel = 1; //频道 1 全服聊天 2 pvp房间聊天 ...
+    optional string Content = 2; //说话的内容（非房间为聊天内容）
+    optional uint32 Id      = 3; //聊天序号（房间内为聊天序号）
+    optional uint32 isBuy   = 4; //是否购买次数(1.钻石购买 0.免费次数)
+}
+
+message CSPvpChatResp{
+    required uint32 Channel = 1; //频道
+    required uint64 Uin     = 2; //说话人的Uin
+    optional string Name    = 3; //说话人的昵称
+    optional uint32 Title   = 4; //说话人的称号
+    optional string Content = 5; //说话的内容
+    optional uint32 Id      = 6; //聊天序号
+    optional string Icon    = 7; //头像
+    optional uint32 VipLevel = 8; // 1.白银 2.黄金 3.钻石
+}
+
+message CSPvpRecoverItemReq{
+    required uint64 Uin     = 1;
+    required uint32 ItemId  = 2;
+}
+
+message CSPvpRecoverItemResp{
+    required uint64 Uin     = 1;
+    required uint32 ItemId = 2;
+    required uint32 Num     = 3;
+}
+
+message CSPvpTrapReq{
+    required uint32 RefreshGroupId  = 1;
+    required uint32 GroupId         = 2;
+    required uint32 TrapId          = 3;
+    required uint32 State           = 4;
+}
+
+message CSPvpTrapResp{
+    required uint32 RefreshGroupId  = 1;
+    required uint32 GroupId         = 2;
+    required uint32 TrapId          = 3;
+    required uint32 State           = 4;
+}
+
+message CSPvpItem{
+    required uint32 Id      = 1;
+    required uint32 Count   = 2;
+}
+
+
+message CSPvpHappyItemsReq{
+}
+
+message CSPvpHappyItemsResp{
+    repeated CSPvpItem Items    = 1;
+    required uint32 NextTime    = 2; //下次道具刷新时间
+}
+
+message CSPvpHappyUseItemReq{
+    required uint32 ItemId      = 1;
+}
+
+message CSPvpHappyUseItemResp{
+    required bool Ret           = 1;
+}
+
+// 战斗中途失败付费引导
+message CSPvpBattleFailReq{
+}
+
+message CSPvpBattleFailResp{
+    optional uint32 ItemId      = 1; 
+    optional uint32 Count       = 2;
+}

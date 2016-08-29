@@ -1,0 +1,1 @@
+curl -XGET "http://10.10.2.60/qihoo/callback.php?order_id=1211090012345678901&app_key=de41eef60d4f161e5116bde59cbad282&product_id=p1&amount=101&app_uid=123456789&app_ext1=XXX201211091985&app_order_id=20151201204249523_qihoo&user_id=987654321&sign_type=md5&gateway_flag=success&sign=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&sign_return=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"

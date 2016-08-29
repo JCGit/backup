@@ -1,0 +1,17 @@
+Id,AchievePoint,GiftId,Icon
+等级,成就点,礼包Id,
+1,25,201,ui/general/Achieve_dj_bg_tong.png
+2,80,202,ui/general/Achieve_dj_bg_tong.png
+3,180,203,ui/general/Achieve_dj_bg_tong.png
+4,300,204,ui/general/Achieve_dj_bg_yin.png
+5,600,205,ui/general/Achieve_dj_bg_yin.png
+6,1000,206,ui/general/Achieve_dj_bg_yin.png
+7,1300,207,ui/general/Achieve_dj_bg_jin.png
+8,1500,208,ui/general/Achieve_dj_bg_jin.png
+9,1800,209,ui/general/Achieve_dj_bg_jin.png
+10,2100,210,ui/general/Achieve_dj_bg_jin.png
+11,2400,210,ui/general/Achieve_dj_bg_jin.png
+12,2600,210,ui/general/Achieve_dj_bg_jin.png
+13,2800,210,ui/general/Achieve_dj_bg_jin.png
+14,3100,210,ui/general/Achieve_dj_bg_jin.png
+15,3400,210,ui/general/Achieve_dj_bg_jin.png

@@ -1,0 +1,30 @@
+
+========
+数据导出
+========
+
+1. 资源来源--从策划发布的路径中使用svn下载对应的配置文件，（trunk或指定tag）
+
+2. 然后把csv文件 复制到工程的fgamesvr/data目录下，注意不要添加服务器并没有用到的
+csv文件；编辑好fgamesvr/data目录svn的忽略文件属性以避免提交没有使用到的csv文件。
+
+
+3. 地图文件更新：map.lua需要特殊处理。进入到tools目录，执行
+
+```
+lua53 linux_tmx_parser.lua config_svn/res/map [这里输入地图文件夹的路径]
+
+```
+生成map.lua文件到默认位置 fgamesvr/data/map.lua
+
+4. 提交有更新的文件 【提交前最好对比以下改动 最好策划确认以下】
+
+
+5. 提示：可以在自己的环境写个脚本来更新固定位置的配置，如trunk的目录，可以这样：
+
+
+```
+cd ~/work/config_git && svn update
+cd ~/work/server/tools/ && lua53 linux_tmx_parser.lua ~/work/config_git/res/map
+cp -r ~/work/config_git/res/table/*.csv ~/work/server/fgamesvr/data
+```

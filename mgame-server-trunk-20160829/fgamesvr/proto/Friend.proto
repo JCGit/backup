@@ -1,0 +1,152 @@
+#include "version.h"
+package fgame;
+option optimize_for = LITE_RUNTIME;
+
+import "Base.proto";
+
+
+////////////////////////////////////    好友消息定义开始   ////////////////////////////////////
+
+
+// 好友信息
+message FriendInfo
+{
+    required uint64 Uin = 1;
+    required string NickName = 2;
+    required string Icon = 3;
+    required uint32 Group = 4;
+    required uint32 Rank = 5;
+    required uint32 WinRate = 6;
+    required uint64 LastOnlineTime = 7;
+    optional uint64 LastOfflineTime = 8; //登出时间
+    optional uint32 Score = 9; //积分
+    optional uint64 Title = 10;
+    optional uint32 Level = 11; //成就等级
+    optional uint32 ExpLevel = 12; //经验等级
+    optional uint32 Exp = 13; //经验值
+	optional string OpenId = 14;
+	optional uint32 VipLevel = 15; //vip等级
+}
+
+message FriendPkRequestInfo
+{
+    required FriendInfo Info = 1;
+    required uint64 Time = 2;
+    required uint32 RoomID = 3;
+}
+
+// 根据uin查询信息
+message CSFriendQueryReq
+{
+    required uint64 Uin = 1;
+    required string NickName =2;
+}
+
+// 返回玩家列表
+message CSFriendQueryResp
+{
+    repeated FriendInfo Players = 1;
+}
+
+// 请求加好友
+message CSFriendRequestAddReq
+{
+    required uint64 Uin = 1;
+}
+
+// 返回空的消息 加好友请求成功
+message CSFriendRequestAddResp
+{
+    required uint64 Uin = 1;
+    optional uint64 OtherUin = 2; //有这两个字段表示是别人加我为好友
+    optional FriendRequestInfo Info = 3;
+}
+
+// 加好友
+message CSFriendConfirmAddReq
+{
+    required bool Agree = 1;
+    repeated uint64 Uins = 2;
+}
+
+// 加好友成功以后 发送该消息通知双方
+message CSFriendConfirmAddResp
+{
+    required bool Agree = 1;
+    repeated FriendInfo NewFriend = 2;
+}
+
+// 获取好友列表信息
+message CSFriendGetInfoReq
+{
+    required uint64 Uin = 1;
+    optional bool Friends = 2;
+    optional bool Requests = 3;
+    optional bool BlackList = 4;
+    optional bool Pk = 5;
+}
+
+message FriendRequestInfo
+{
+    required FriendInfo Info = 1;
+    required uint64 Time = 2;
+}
+
+message CSFriendGetInfoResp
+{
+    repeated FriendInfo Friends = 1;
+    repeated FriendRequestInfo Requests = 2;
+    repeated FriendInfo BlackList = 3;
+    repeated FriendPkRequestInfo Pk = 4;
+}
+
+// 删除好友
+message CSFriendRequestRemoveReq
+{
+    required uint64 Uin = 1;
+}
+
+message CSFriendRequestRemoveResp
+{
+    required uint64 Uin = 1;
+    required string NickName = 2;
+}
+
+// 加黑名单
+message CSFriendAddBlackListReq
+{
+    required uint64 Uin = 1;
+}
+
+message CSFriendAddBlackListResp
+{
+    required uint64 Uin = 1;
+    required string NickName = 2;
+}
+
+// 移除黑名单
+message CSFriendRemoveBlackListReq
+{
+    required uint64 Uin = 1;
+}
+
+message CSFriendRemoveBlackListResp
+{
+    required uint64 Uin = 1;
+    required string NickName = 2;
+}
+////////////////////////////////////    好友消息定义结束   ////////////////////////////////////
+
+#if(VERSION == VERSION_MPLUS)
+//mplus------------
+//同步平台好友
+message CSSycFriendListReq
+{
+    repeated string OpenId = 1;
+}
+
+message CSSycFriendListResp
+{
+    repeated FriendInfo Friends = 1;
+}
+#endif

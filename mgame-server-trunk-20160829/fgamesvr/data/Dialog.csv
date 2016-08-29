@@ -1,0 +1,12 @@
+ID,Type,IconID,IconFlipping,IconPosition,IconScale,KeepTime,FeaturePath
+ID,类型(1.人物对话(无头像);2.人物对话(有头像);3.引导形式),头像路径,头像是否翻转,头像偏移位置,头像缩放比例,持续时间,立绘路径
+100,0,ui/Icon2/asst_ghost_icon.png,0,0#0,1,0,nil
+101,1,ui/Icon2/asst_ghost_icon.png,0,0#40,1,3,nil
+102,2,ui/guide/dialog_baozi.png,0,0#0,1,0,nil
+103,3,ui/guide/npc4small.png,0,0#0,1,0,nil
+104,3,ui/guide/npc4small.png,1,350#0,1,0,nil
+105,2,ui/guide/dialog_niumowang.png,0,0#0,1,0,ui/guide/stay_niumowang.png
+106,2,ui/guide/dialog_sunwukong.png,0,0#0,1,0,ui/guide/stay_sunwukong.png
+107,2,ui/guide/dialog_guanyu.png,0,0#0,1,0,ui/guide/stay_guanyu.png
+108,1,ui/Icon2/asst_ghost_icon.png,0,0#40,1,99,nil
+109,2,ui/guide/dialog_wushi.png,0,0#0,1,0,nil

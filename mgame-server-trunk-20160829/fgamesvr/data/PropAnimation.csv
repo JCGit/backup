@@ -1,0 +1,19 @@
+id,propid, fileName  , aniName ,start,stand,end,play,zOrder,autoPlay,position,opacity,playSoundId,startSoundId,standSoundId,endSoundId
+id,道具id,文件动画,动画标签,动画标签,动画标签,动画标签,层次,自动播放,屏幕位置,透明度,透明度,play声音Id,start声音Id,stand声音Id,end声音Id
+1,30001,0,fla_jiabingli_ADDITIVE,null,null,null,play,120,0,0,225,-180,0,0,0
+2,30006,0,fla_LaJiaoZD2,null,null,null,play,0,0,0,225,-176,0,0,0
+3,30006,0,fla_LaJiaoZD_ADDITIVE,null,null,null,play,120,0,0,225,0,0,0,0
+4,30007,0,fla_bingMG,born,stand,end,null,110,1,0,225,0,0,0,0
+5,30009,0,fla_yinshen_ADDITIVE,born,stand,end,null,4,0,0,225,0,-178,0,0
+6,30010,0,fla_dumogu,born,stand,end,null,4,0,0,200,0,-177,0,0
+7,30010,0,fla_dumoguTX,born,stand,end,null,120,0,0,225,0,0,0,0
+8,10001,0,fla_BingLiBao,null,null,null,play,120,0,0,225,-180,0,0,0
+9,10001,0,fla_BingLiBao2,null,null,null,play,120,0,0,225,0,0,0,0
+10,10006,0,fla_huidie,null,null,null,play,0,0,0,225,-176,0,0,0
+11,10006,0,fla_huidie_ADDITIVE,null,null,null,play,120,0,0,225,0,0,0,0
+12,10007,0,fla_bing_quanping_ADDITIVE,null,null,null,play,10001,0,1,225,0,0,0,0
+13,10007,0,fla_bingdong,start,stand,end,null,110,1,0,225,0,0,0,0
+14,10009,0,fla_yinshen_ADDITIVE,born,stand,end,null,4,0,0,225,0,-178,0,0
+15,10009,0,fla_yinshenb,born,stand,end,null,100,0,0,225,0,0,0,0
+16,10010,0,fla_digouyou,born,stand,end,null,4,0,0,200,0,-175,0,0
+17,10010,0,fla_digouyou_ADDITIVE,born,stand,end,null,120,0,0,225,0,0,0,0

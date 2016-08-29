@@ -1,0 +1,10 @@
+id,active,name,alias,introduce,jumppoint,icon,path,level,extra,type
+id,激活,名称,别名,美味战纪（获得途径）,跳转位置,图标,路径,等级,加成(奖励类型+百分比),
+5,1,新手勋章,BigFish,完成新手训练营,141,2,ui/Icon2/BadgeIcon05_big.png,0,0,2
+1,1,常胜将军,TheTerminator,常胜将军活动期间，连续获得20场对战的胜利,123#1015,2,ui/Icon2/BadgeIcon01_big.png,1,11#5,1
+4,1,常胜将军,TheTerminator,常胜将军活动期间，连续获得30场对战的胜利,123#1015,2,ui/Icon2/BadgeIcon04_big.png,2,11#10,1
+6,1,常胜将军,TheTerminator,常胜将军活动期间，连续获得50场对战的胜利,123#1015,2,ui/Icon2/BadgeIcon06_big.png,3,11#15,1
+2,1,勇者之心,Braveheart,勇者之心活动期间，连续7天完成活动任务,123#1013,2,ui/Icon2/BadgeIcon02_big.png,0,0,4
+3,1,战斗狂人,LordofWar,战斗狂人活动期间，连续7天完成活动任务,123#1014,2,ui/Icon2/BadgeIcon03_big.png,0,0,3
+100,0,暂未开放,None,暂未开放,1,2,ui/Icon2/BadgeIcon07_big.png,0,0,0
+101,0,暂未开放,None,暂未开放,1,2,ui/Icon2/BadgeIcon07_big.png,0,0,0
