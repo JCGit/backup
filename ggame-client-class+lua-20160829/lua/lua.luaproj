@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>E439935D-B2A2-46AE-856D-2AA408428F33</ProjectGuid>
+    <!--$guid1$-->
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>
+    </StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Activity\AccumulativeConsume.lua" />
+    <Compile Include="Activity\AccumulativeConsume2.lua" />
+    <Compile Include="Activity\AccumulativeRecharge.lua" />
+    <Compile Include="Activity\AccumulativeRecharge2.lua" />
+    <Compile Include="Activity\ActivityBasePage.lua" />
+    <Compile Include="Activity\ActivityConfig.lua" />
+    <Compile Include="Activity\ActivityFunction.lua" />
+    <Compile Include="Activity\ActivityInfo.lua" />
+    <Compile Include="Activity\ActivityPage.lua" />
+    <Compile Include="Activity\ContinueRecharge.lua" />
+    <Compile Include="Activity\CumulativeLoginConfig.lua" />
+    <Compile Include="Activity\CumulativeLoginConfig2.lua" />
+    <Compile Include="Activity\CumulativeLoginDataHelper.lua" />
+    <Compile Include="Activity\CumulativeLoginDataHelper2.lua" />
+    <Compile Include="Activity\CumulativeLoginPage.lua" />
+    <Compile Include="Activity\CumulativeLoginPage2.lua" />
+    <Compile Include="Activity\DailyLogin.lua" />
+    <Compile Include="Activity\DailyOnceRecharge.lua" />
+    <Compile Include="Activity\DailyOnceRecharge2.lua" />
+    <Compile Include="Activity\ExchangeActivity.lua" />
+    <Compile Include="Activity\ExchangeBetaWord.lua" />
+    <Compile Include="Activity\ExpeditionContributePage.lua" />
+    <Compile Include="Activity\ExpeditionDataHelper.lua" />
+    <Compile Include="Activity\ExpeditionMaterialCollectionPage.lua" />
+    <Compile Include="Activity\ExpeditionRankPage.lua" />
+    <Compile Include="Activity\HolidayTreasure.lua" />
+    <Compile Include="Activity\LargeRechargeRebate.lua" />
+    <Compile Include="Activity\LargeRechargeRebateList.lua" />
+    <Compile Include="Activity\RechargeRebatePage.lua" />
+    <Compile Include="Activity\TimeLimitPurchasingPage.lua" />
+    <Compile Include="Activity\VipWelfarePage.lua" />
+    <Compile Include="Activity\WeeklyCardPage.lua" />
+    <Compile Include="Activity\WordExchangeRewardPage.lua" />
+    <Compile Include="AddCountPage.lua" />
+    <Compile Include="AnalyticsManager.lua" />
+    <Compile Include="Arena\ArenaData.lua" />
+    <Compile Include="Arena\ArenaPage.lua" />
+    <Compile Include="Arena\ArenaRankPage.lua" />
+    <Compile Include="Arena\ArenaRecordPage.lua" />
+    <Compile Include="BaseContentPage.lua" />
+    <Compile Include="BaseDataHelper.lua" />
+    <Compile Include="BasePage.lua" />
+    <Compile Include="BattleMainPageHelper.lua" />
+    <Compile Include="Battle\BattleChatHistoryPage.lua" />
+    <Compile Include="Battle\BattleDataHelper.lua" />
+    <Compile Include="Battle\BattleFightHelper.lua" />
+    <Compile Include="Battle\BattleFightSceneHelper.lua" />
+    <Compile Include="Battle\BattleHintAni.lua" />
+    <Compile Include="Battle\BattleMainPageHelper.lua" />
+    <Compile Include="Battle\BattlePage.lua" />
+    <Compile Include="Battle\BattleResultPopPage.lua" />
+    <Compile Include="Battle\BattleSettingPage.lua" />
+    <Compile Include="Battle\BossWipeResultPage.lua" />
+    <Compile Include="Battle\EliteMapInfoPage.lua" />
+    <Compile Include="Battle\EliteMapLosePopup.lua" />
+    <Compile Include="Battle\EliteMapManager.lua" />
+    <Compile Include="Battle\EliteMapPage.lua" />
+    <Compile Include="Battle\EliteMapRewardPopup.lua" />
+    <Compile Include="Battle\EliteMapWinPopup.lua" />
+    <Compile Include="Battle\MapPage.lua" />
+    <Compile Include="Battle\OfflineAccountPage.lua" />
+    <Compile Include="Battle\ViewBattlePage.lua" />
+    <Compile Include="Battle\ViewBattleSceneHelper.lua" />
+    <Compile Include="CDKeyPage.lua" />
+    <Compile Include="Chat\ChatManager.lua" />
+    <Compile Include="Chat\LeaveMessageDetailPage.lua" />
+    <Compile Include="Chat\LeaveMessagePage.lua" />
+    <Compile Include="ClientSettingManager.lua" />
+    <Compile Include="CocoDebug.lua" />
+    <Compile Include="common.lua" />
+    <Compile Include="CommonHelpPage.lua" />
+    <Compile Include="CommonPage.lua" />
+    <Compile Include="ConfigManager.lua" />
+    <Compile Include="ConnectFailedPage.lua" />
+    <Compile Include="DecisionPage.lua" />
+    <Compile Include="Equip\BatchSellEquipPage.lua" />
+    <Compile Include="Equip\EquipBaptizePage.lua" />
+    <Compile Include="Equip\EquipBuildPage.lua" />
+    <Compile Include="Equip\EquipCompoundPage.lua" />
+    <Compile Include="Equip\EquipEmbedPage.lua" />
+    <Compile Include="Equip\EquipEnhancePage.lua" />
+    <Compile Include="Equip\EquipExtendPage.lua" />
+    <Compile Include="Equip\EquipFilterPage.lua" />
+    <Compile Include="Equip\EquipInfoPage.lua" />
+    <Compile Include="Equip\EquipManager.lua" />
+    <Compile Include="Equip\EquipmentPage.lua" />
+    <Compile Include="Equip\EquipOprHelper.lua" />
+    <Compile Include="Equip\EquipSelectPage.lua" />
+    <Compile Include="Equip\EquipSwallowPage.lua" />
+    <Compile Include="Equip\FullAttributePage.lua" />
+    <Compile Include="Equip\GodlyEquipBuildPage.lua" />
+    <Compile Include="Equip\MeltPage.lua" />
+    <Compile Include="Equip\UserEquipManager.lua" />
+    <Compile Include="Friend\FriendPage.lua" />
+    <Compile Include="Friend\FriendRecommendPage.lua" />
+    <Compile Include="Friend\FriendSearchPopPage.lua" />
+    <Compile Include="GameConfig.lua" />
+    <Compile Include="GameUtil.lua" />
+    <Compile Include="GiftPage.lua" />
+    <Compile Include="GoodsShowListPage.lua" />
+    <Compile Include="Guide\NewbieGuideManager.lua" />
+    <Compile Include="Guide\NewbieGuidePopUp.lua" />
+    <Compile Include="Guide\PromptPage.lua" />
+    <Compile Include="Guild\GuildBossHarmRankPage.lua" />
+    <Compile Include="Guild\GuildCreatePage.lua" />
+    <Compile Include="Guild\GuildData.lua" />
+    <Compile Include="Guild\GuildDataManager.lua" />
+    <Compile Include="Guild\GuildManagePage.lua" />
+    <Compile Include="Guild\GuildMemberPopupPage.lua" />
+    <Compile Include="Guild\GuildMembersPage.lua" />
+    <Compile Include="Guild\GuildOpenBossConfirmPage.lua" />
+    <Compile Include="Guild\GuildPage.lua" />
+    <Compile Include="Guild\GuildRankingPage.lua" />
+    <Compile Include="Guild\GuildSearchPopPage.lua" />
+    <Compile Include="Guild\GuildSetAnnouncementPage.lua" />
+    <Compile Include="Guild\GuildSetRestrictionPage.lua" />
+    <Compile Include="Guild\GuildShopPage.lua" />
+    <Compile Include="HelpPage.lua" />
+    <Compile Include="HelpPageSpecial.lua" />
+    <Compile Include="include\bit.lua" />
+    <Compile Include="include\containers.lua" />
+    <Compile Include="include\decoder.lua" />
+    <Compile Include="include\descriptor.lua" />
+    <Compile Include="include\encoder.lua" />
+    <Compile Include="include\json.lua" />
+    <Compile Include="include\listener.lua" />
+    <Compile Include="include\protobuf.lua" />
+    <Compile Include="include\text_format.lua" />
+    <Compile Include="include\type_checkers.lua" />
+    <Compile Include="include\wire_format.lua" />
+    <Compile Include="IncPbCommon.lua" />
+    <Compile Include="IncScriptPage.lua" />
+    <Compile Include="Item\ConfirmUseItemPage.lua" />
+    <Compile Include="Item\GemSelectPage.lua" />
+    <Compile Include="Item\GemUpgradePage.lua" />
+    <Compile Include="Item\ItemInfoPage.lua" />
+    <Compile Include="Item\ItemManager.lua" />
+    <Compile Include="Item\ItemOprHelper.lua" />
+    <Compile Include="Item\ItemSelectPage.lua" />
+    <Compile Include="Item\SoulStoneUpgradePage.lua" />
+    <Compile Include="Item\UserItemManager.lua" />
+    <Compile Include="ListenMessage.lua" />
+    <Compile Include="Mail\MailBattlePage.lua" />
+    <Compile Include="Mail\MailBattleSubPage.lua" />
+    <Compile Include="Mail\MailConfig.lua" />
+    <Compile Include="Mail\MailDataHelper.lua" />
+    <Compile Include="Mail\MailPage.lua" />
+    <Compile Include="main.lua" />
+    <Compile Include="MainScenePage.lua" />
+    <Compile Include="MarketPage.lua" />
+    <Compile Include="Mercenary\MercenaryEnhancePage.lua" />
+    <Compile Include="Mercenary\MercenaryHaloManager.lua" />
+    <Compile Include="Mercenary\MercenaryHaloPage.lua" />
+    <Compile Include="Mercenary\MercenaryPage.lua" />
+    <Compile Include="Mercenary\MercenaryPopPage.lua" />
+    <Compile Include="Mercenary\MercenaryUpStepPage.lua" />
+    <Compile Include="Mercenary\UserMercenaryManager.lua" />
+    <Compile Include="MessageFlowPopPage.lua" />
+    <Compile Include="MultiColumnScrollViewHelper.lua" />
+    <Compile Include="MusicManager.lua" />
+    <Compile Include="NodeHelper.lua" />
+    <Compile Include="NoticePage.lua" />
+    <Compile Include="PackageLogicForLua.lua" />
+    <Compile Include="PackagePage.lua" />
+    <Compile Include="PackagePageEx.lua" />
+    <Compile Include="PageManager.lua" />
+    <Compile Include="PBHelper.lua" />
+    <Compile Include="PlayerInfo\ChooseRolePage.lua" />
+    <Compile Include="PlayerInfo\PlayerInfoPage.lua" />
+    <Compile Include="PlayerInfo\PlayerTitlePage.lua" />
+    <Compile Include="PlayerInfo\RoleManager.lua" />
+    <Compile Include="PlayerInfo\SignaturePage.lua" />
+    <Compile Include="PlayerInfo\TitleManager.lua" />
+    <Compile Include="PlayerInfo\UserInfo.lua" />
+    <Compile Include="PlayerInfo\ViewPlayerInfo.lua" />
+    <Compile Include="PlayerInfo\ViewPlayerInfoPage.lua" />
+    <Compile Include="ProfessionRankingPage.lua" />
+    <Compile Include="protobuf\Activity_pb.lua" />
+    <Compile Include="protobuf\Alliance_pb.lua" />
+    <Compile Include="protobuf\Arena_pb.lua" />
+    <Compile Include="protobuf\Attribute_pb.lua" />
+    <Compile Include="protobuf\Battle_pb.lua" />
+    <Compile Include="protobuf\CampWar_pb.lua" />
+    <Compile Include="protobuf\Cdk_pb.lua" />
+    <Compile Include="protobuf\Chat_pb.lua" />
+    <Compile Include="protobuf\Const_pb.lua" />
+    <Compile Include="protobuf\Consume_pb.lua" />
+    <Compile Include="protobuf\EquipOpr_pb.lua" />
+    <Compile Include="protobuf\Equip_pb.lua" />
+    <Compile Include="protobuf\FriendRecommend_pb.lua" />
+    <Compile Include="protobuf\Friend_pb.lua" />
+    <Compile Include="protobuf\HonorShop_pb.lua" />
+    <Compile Include="protobuf\HP_pb.lua" />
+    <Compile Include="protobuf\ItemOpr_pb.lua" />
+    <Compile Include="protobuf\Item_pb.lua" />
+    <Compile Include="protobuf\Login_pb.lua" />
+    <Compile Include="protobuf\Mail_pb.lua" />
+    <Compile Include="protobuf\Mission_pb.lua" />
+    <Compile Include="protobuf\Msg_pb.lua" />
+    <Compile Include="protobuf\Notice_pb.lua" />
+    <Compile Include="protobuf\PlayerTitle_pb.lua" />
+    <Compile Include="protobuf\Player_pb.lua" />
+    <Compile Include="protobuf\ProfRank_pb.lua" />
+    <Compile Include="protobuf\Recharge_pb.lua" />
+    <Compile Include="protobuf\Reward_pb.lua" />
+    <Compile Include="protobuf\RoleOpr_pb.lua" />
+    <Compile Include="protobuf\Shop_pb.lua" />
+    <Compile Include="protobuf\Skill_pb.lua" />
+    <Compile Include="protobuf\Snapshot_pb.lua" />
+    <Compile Include="protobuf\Status_pb.lua" />
+    <Compile Include="protobuf\SysProtocol_pb.lua" />
+    <Compile Include="protobuf\TeamBattle_pb.lua" />
+    <Compile Include="protobuf\VipWelfare_pb.lua" />
+    <Compile Include="PVP\CampFightPage.lua" />
+    <Compile Include="PVP\CampMainPage.lua" />
+    <Compile Include="PVP\CampWarManager.lua" />
+    <Compile Include="PVP\CampWarRankPage.lua" />
+    <Compile Include="PVP\PVPActivityPage.lua" />
+    <Compile Include="PVP\RegimentWarControlPage.lua" />
+    <Compile Include="PVP\RegimentWarPage.lua" />
+    <Compile Include="Recharge\LargeRecharge.lua" />
+    <Compile Include="Recharge\RechargePage.lua" />
+    <Compile Include="Recharge\RechargeSucceedPopUpPage.lua" />
+    <Compile Include="ResInfoPage.lua" />
+    <Compile Include="ResListPage.lua" />
+    <Compile Include="ResManagerForLua.lua" />
+    <Compile Include="RewardManagerLogic.lua" />
+    <Compile Include="Skill\MercenarySkillPage.lua" />
+    <Compile Include="Skill\ReplaceMercenarySkillPage.lua" />
+    <Compile Include="Skill\ReplaceSkillPage.lua" />
+    <Compile Include="Skill\SkillExPage.lua" />
+    <Compile Include="Skill\SkillManager.lua" />
+    <Compile Include="Skill\SkillPage.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ggame_lua.deproj" />
+    <Content Include="ggame_lua.deuser" />
+    <Content Include="lua.luaproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Activity\" />
+    <Folder Include="Arena\" />
+    <Folder Include="Battle\" />
+    <Folder Include="Chat\" />
+    <Folder Include="Equip\" />
+    <Folder Include="Friend\" />
+    <Folder Include="Guide\" />
+    <Folder Include="Guild\" />
+    <Folder Include="include\" />
+    <Folder Include="Item\" />
+    <Folder Include="Mail\" />
+    <Folder Include="Mercenary\" />
+    <Folder Include="obj\" />
+    <Folder Include="obj\Debug\" />
+    <Folder Include="PlayerInfo\" />
+    <Folder Include="protobuf\" />
+    <Folder Include="PVP\" />
+    <Folder Include="Recharge\" />
+    <Folder Include="Skill\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
+</Project>
